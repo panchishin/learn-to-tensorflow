@@ -23,8 +23,14 @@ Same as Level 2 but also do not refer to the template folder.
 ### Level 4 - Solo
 Do all the challenges without any reference including searching the web.
 
-### Level 5 - Graduate
+### Beyond Level 4 - The Graduate
 If you've completed Level 4 within three hours then consider yourself graduated.  It's time to move onto more complex real life applications.
+
+Consider visiting https://www.tensorflow.org and going through each tutorial in a similar manner, graduating yourself from Level 1 up to Level 5.  There is a unix bash script in the solutions folder **solutions/convert-solution-to-template.sh** that you could use on any code to convert it to a template, like so:
+```
+./solutions/convert-solution-to-template.sh < solution-file-name.py > template-file-name.py
+```
+
 
 
 ## The challenges
@@ -72,3 +78,4 @@ Replicate 04-xor-2d, but instead of using constants for input and output, use fe
 
 ### 06-save.py
 Improve 05-feed.py to save the session information at the end of training and to use the saved session information if it exists instead of training.
+
