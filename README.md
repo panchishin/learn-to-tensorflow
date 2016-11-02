@@ -41,6 +41,11 @@ Create a very basic tensorflow program that adds one to a variable and uses a lo
 
 ### 01-multiply.py
 Multiply two matricies together.
+```
+input1 = [[3. , 5.]]
+input2 = [[7.],[1.]]
+```
+The result should be 26.
 
 
 ### 02-xor-1d.py
