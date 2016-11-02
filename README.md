@@ -21,7 +21,7 @@ Same as Level 1 but do not reference the solution folder.
 Same as Level 2 but also do not refer to the template folder.
 
 ### Level 4 - Solo
-Do all the challenges without any reference including searching the web.
+Do all the challenges without any reference including searching the web.  Try substituting relu for sigmoid and compare the difference in learning rate and loss.
 
 ### Beyond Level 4 - The Graduate
 If you've completed Level 4 within three hours then consider yourself graduated.  It's time to move onto more complex real life applications.
