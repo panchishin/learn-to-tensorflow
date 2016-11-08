@@ -86,36 +86,11 @@ Improve 05-feed.py to save the session information at the end of training and to
 
 
 ### 07-rnn.py
-Implement a recurrant neural net to accurately predict the next element in a series created by makeXY()
-```
-### Creation of series data.
-# The X is a series like [2,3,4] and the expected result is [5]
-# Also makes decreasing and constant series
-# of length 4,3,and 2
-def makeXY() :
-  x,y = makeXYfirst()
-  if np.random.random() > 0.66 :
-    x = x[1:]
-  elif np.random.random() > 0.5 :
-    x = x[2:]
-  return x,y
+Implement a recurrant neural net to accurately predict the next element in a series created by makeXY() in helper_make_xy.py
 
-def makeXYfirst() :
-  if np.random.random() > 0.66 :
-    x = int( np.random.random() * 6. ) + np.array([0,1,2,3])
-    y = x[-1] + 1
-    return x,y
-  if np.random.random() > 0.5 :
-    x = int( np.random.random() * 6. ) + np.array([4,3,2,1])
-    y = x[-1] - 1
-    return x,y
-  else :
-    x = int( np.random.random() * 10. ) + np.array([0,0,0,0])
-    y = x[-1]
-    return x,y
-```
+This creates a series X like [2,3,4,5] and Y = [6]. The series can be in reverse and just constant.  
 
-This creates a series X like [2,3,4,5] and Y = [6]. The series can be in reverse and just constant.  An architecture that has been shown to work is:
+An architecture that has been shown to work is:
 - RNN Cell state size of 20
 - 2 layers of RNN Cells
 - a fully connected 20x10 output layer
