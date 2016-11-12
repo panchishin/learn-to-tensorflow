@@ -5,8 +5,8 @@
 import tensorflow as tf
 
 ### constant data
-x = [[0.,0.],[1.,1.],[1.,0.],[0.,1.]]
-y = [[1.,0.],[1.,0.],[0.,1.],[0.,1.]]
+x  = [[0.,0.],[1.,1.],[1.,0.],[0.,1.]]
+y_ = [[1.,0.],[1.,0.],[0.,1.],[0.,1.]]
 
 ### induction
 # 1x2 input -> 2x3 hidden sigmoid -> 3x1 sigmoid output
@@ -23,12 +23,12 @@ h1 = # TODO
 # Layer 2 = # TODO
 m2 = # TODO
 b2 = # TODO
-y_ = # TODO
+y_out = # TODO
 
 
 ### loss
 
-# loss : sum of the squares of y0 - y_
+# loss : sum of the squares of y0 - y_out
 loss = # TODO
 
 # training step : gradient decent (1.0) to minimize loss
