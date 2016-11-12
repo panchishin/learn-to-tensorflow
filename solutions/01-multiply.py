@@ -1,6 +1,4 @@
-## Lesson 1 - multiply 2 constants
-# Write a simple Tensorflow program that has the following phases
-
+### imports
 import tensorflow as tf
 
 ## data

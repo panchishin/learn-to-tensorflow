@@ -1,6 +1,3 @@
-## Lesson 4 - XOR with 2 outputs
-# Change lesson 2 to have two softmax output channels instead of sigmoid
-
 ### imports
 import tensorflow as tf
 
@@ -12,17 +9,17 @@ y_ = [[1.,0.],[1.,0.],[0.,1.],[0.,1.]]
 # 1x2 input -> 2x3 hidden sigmoid -> 3x1 sigmoid output
 
 # Layer 0 = the x2 inputs
-x0 = tf.constant( x , dtype=tf.float32 )
+x0 = tf.constant( x  , dtype=tf.float32 )
 y0 = tf.constant( y_ , dtype=tf.float32 )
 
 # Layer 1 = the 2x3 hidden sigmoid
 m1 = tf.Variable( tf.random_uniform( [2,3] , minval=0.1 , maxval=0.9 , dtype=tf.float32  ))
-b1 = tf.Variable( tf.random_uniform( [3] , minval=0.1 , maxval=0.9 , dtype=tf.float32  ))
+b1 = tf.Variable( tf.random_uniform( [3]   , minval=0.1 , maxval=0.9 , dtype=tf.float32  ))
 h1 = tf.sigmoid( tf.matmul( x0,m1 ) + b1 )
 
 # Layer 2 = the 3x2 softmax output
 m2 = tf.Variable( tf.random_uniform( [3,2] , minval=0.1 , maxval=0.9 , dtype=tf.float32  ))
-b2 = tf.Variable( tf.random_uniform( [2] , minval=0.1 , maxval=0.9 , dtype=tf.float32  ))
+b2 = tf.Variable( tf.random_uniform( [2]   , minval=0.1 , maxval=0.9 , dtype=tf.float32  ))
 y_out = tf.nn.softmax( tf.matmul( h1,m2 ) + b2 )
 
 
@@ -41,10 +38,11 @@ train = tf.train.GradientDescentOptimizer(1.0).minimize(loss)
 with tf.Session() as sess:
   sess.run( tf.initialize_all_variables() )
   print "\nloss"
-  for epoc in range(5):
-    for step in range(100) :
-      sess.run(train)
-    print sess.run(loss)
+  for step in range(500) :
+    sess.run(train)
+    if (step + 1) % 100 == 0 :
+      print sess.run(loss)
+
 
   results = sess.run([m1,b1,m2,b2,y_out,loss])
   labels  = "m1,b1,m2,b2,y_out,loss".split(",")

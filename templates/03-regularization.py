@@ -1,6 +1,3 @@
-## Lesson 3 - regularization
-# Improve upon lesson 2 by adding regularization
-
 ### imports
 import tensorflow as tf
 
@@ -44,13 +41,13 @@ train = # TODO
 with tf.Session() as sess:
   # TODO session execution command here
   print "\nloss , regularization"
-  for epoc in range(5):
-    for step in range(100) :
-      # TODO session execution command here
-    print # TODO session execution command here
+  for step in range(500) :
+    # TODO session execution command here
+    if (step + 1) % 100 = # TODO
+      print # TODO session execution command here
 
-  results = # TODO
-  labels  = # TODO
+  results = # TODO calculate and return m1,b1,m2,b2,y_,loss
+  labels  = "m1,b1,m2,b2,y_out,loss".split(",")
   for label,result in zip(*(labels,results)) :
     print ""
     print label

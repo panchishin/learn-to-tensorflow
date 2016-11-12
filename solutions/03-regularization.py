@@ -1,6 +1,3 @@
-## Lesson 3 - regularization
-# Improve upon lesson 2 by adding regularization
-
 ### imports
 import tensorflow as tf
 
@@ -17,12 +14,12 @@ y0 = tf.constant( y_ , dtype=tf.float32 )
 
 # Layer 1 = the 2x3 hidden sigmoid
 m1 = tf.Variable( tf.random_uniform( [2,3] , minval=0.1 , maxval=0.9 , dtype=tf.float32  ))
-b1 = tf.Variable( tf.random_uniform( [3] , minval=0.1 , maxval=0.9 , dtype=tf.float32  ))
+b1 = tf.Variable( tf.random_uniform( [3]   , minval=0.1 , maxval=0.9 , dtype=tf.float32  ))
 h1 = tf.sigmoid( tf.matmul( x0,m1 ) + b1 )
 
 # Layer 2 = the 3x1 sigmoid output
 m2 = tf.Variable( tf.random_uniform( [3,1] , minval=0.1 , maxval=0.9 , dtype=tf.float32  ))
-b2 = tf.Variable( tf.random_uniform( [1] , minval=0.1 , maxval=0.9 , dtype=tf.float32  ))
+b2 = tf.Variable( tf.random_uniform( [1]   , minval=0.1 , maxval=0.9 , dtype=tf.float32  ))
 y_out = tf.sigmoid( tf.matmul( h1,m2 ) + b2 )
 
 
@@ -44,10 +41,10 @@ train = tf.train.GradientDescentOptimizer(1.0).minimize(loss + regularization*0.
 with tf.Session() as sess:
   sess.run( tf.initialize_all_variables() )
   print "\nloss , regularization"
-  for epoc in range(5):
-    for step in range(100) :
-      sess.run(train)
-    print sess.run([loss,regularization])
+  for step in range(500) :
+    sess.run(train)
+    if (step + 1) % 100 == 0 :
+      print sess.run(loss)
 
   results = sess.run([m1,b1,m2,b2,y_out,loss])
   labels  = "m1,b1,m2,b2,y_out,loss".split(",")

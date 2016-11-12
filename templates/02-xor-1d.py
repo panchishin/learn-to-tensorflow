@@ -1,12 +1,9 @@
-## Lesson 2 - solve XOR
-# use random variables in the range of 0.1 to 0.9 and 32 bit floating precision
-
 ### imports
 import tensorflow as tf
 
 ### constant data
-x = [[0.,0.],[1.,1.],[1.,0.],[0.,1.]]
-y = [[0.],[0.],[1.],[1.]]
+x  = [[0.,0.],[1.,1.],[1.,0.],[0.,1.]]
+y_ = [[0.],[0.],[1.],[1.]]
 
 ### induction
 # 1x2 input -> 2x3 hidden sigmoid -> 3x1 sigmoid output
@@ -47,7 +44,7 @@ with tf.Session() as sess:
       print # TODO session execution command here
 
   results = # TODO calculate and return m1,b1,m2,b2,y_,loss
-  labels  = "m1,b1,m2,b2,y_,loss".split(",")
+  labels  = "m1,b1,m2,b2,y_out,loss".split(",")
   for label,result in zip(*(labels,results)) :
     print ""
     print label
