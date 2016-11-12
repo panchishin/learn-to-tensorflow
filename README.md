@@ -60,13 +60,14 @@ And break the problem into the following layers
 - 3x1 + bias sigmoid output layer
 - calculate loss as the sum of the squares of y - y_
 - use gradient decent (set to 1.0) to minimize loss
+
 Run iteratively 500 times and print all the variable data.
 
 
 ### 03-regularization.py
 Add regularization to 02-xor-1d.py
 
-One type of regularization is to minimize the values of the transformation matricies, such as the as the average of the square of m1 and m2.
+One type of regularization is to minimize the values of the transformation matricies, such as the as the average or sum of the square of m1 and the square of m2.  The regularization term will need to be scaled to work with the loss term.  A scaling factor can be found experimentally.  Try multiplying your regularization by 0.01 to begin then experiment with different values.
 
 
 ### 04-xor-2d.py
@@ -88,7 +89,7 @@ Improve 05-feed.py to save the session information at the end of training and to
 ### 07-rnn.py
 Implement a recurrant neural net to accurately predict the next element in a series created by makeXY() in helper_make_xy.py
 
-This creates a series X like [2,3,4,5] and Y = [6]. The series can be in reverse and just constant.  
+This creates a series X like [2,3,4,5] and Y = [6]. The series can be a forward progression, a reverse progression, or a constant.  The series may also contain 3, 4, or 5 elements.
 
 An architecture that has been shown to work is:
 - RNN Cell state size of 20
