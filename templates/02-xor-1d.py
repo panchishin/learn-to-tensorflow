@@ -23,12 +23,12 @@ h1 = # TODO
 # Layer 2 = # TODO
 m2 = # TODO
 b2 = # TODO
-y_ = # TODO
+y_out = # TODO
 
 
 ### loss
 
-# loss : sum of the squares of y0 - y_
+# loss : sum of the squares of y0 - y_out
 loss = # TODO
 
 # training step : gradient decent (1.0) to minimize loss
@@ -41,10 +41,10 @@ train = # TODO
 with tf.Session() as sess:
   # TODO session execution command here
   print "\nloss"
-  for epoc in range(5):
-    for step in range(100) :
-      # TODO session execution command here
-    print # TODO get the loss from the session
+  for step in range(500) :
+    # TODO session execution command here
+    if (step + 1) % 100 = # TODO
+      print # TODO session execution command here
 
   results = # TODO calculate and return m1,b1,m2,b2,y_,loss
   labels  = "m1,b1,m2,b2,y_,loss".split(",")
