@@ -8,8 +8,8 @@ input1 = [[3. , 5.]]
 input2 = [[7.],[1.]]
 
 # Multiply a 1x2 [[3.,5.]] by a 2x1 [[7.],[1.]]
-a = tf.constant( [[3. , 5.]] )
-b = tf.constant( [[7.],[1.]] )
+a = tf.constant( input1 )
+b = tf.constant( input2 )
 
 
 ## induction

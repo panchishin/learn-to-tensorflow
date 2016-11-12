@@ -9,7 +9,8 @@ state = tf.Variable(0)
 one = tf.constant(1)
 
 # update phase adds state and one and then assigns to state
-update = tf.assign(state, tf.add(state, one) )
+addition = tf.add(state, one)
+update = tf.assign(state, addition )
 
 # create a session
 with tf.Session() as sess:
