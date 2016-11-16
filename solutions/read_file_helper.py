@@ -2,10 +2,8 @@ import numpy as np
 
 fileText = "Fuzzy Wuzzy was a bear.  Fuzzy Wuzzy had no hair.  Fuzzy Wuzzy wasn't fuzzy, was he."
 fileTextLength = len(fileText)
-print "fileTextLength",fileTextLength
 textLength = 5
 iterations = int(fileTextLength/textLength)
-print "iterations",iterations
 
 def set( fileName , length ) :
   global fileText
@@ -29,4 +27,6 @@ def getXY( fullindex ) :
   index = ( fullindex % iterations ) * textLength
   x = fileText[index:index+textLength]
   y = fileText[index+1:index+textLength+1]
+  x = [ ord(c) for c in x ]
+  y = [ ord(c) for c in y ]
   return x, y, 1.0*fullindex/iterations
