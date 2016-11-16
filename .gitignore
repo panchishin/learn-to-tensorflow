@@ -1,1 +1,6 @@
+text
+
 **/*.pyc
+**/text-input-file.txt
+**/checkpoint
+**/*.save*
