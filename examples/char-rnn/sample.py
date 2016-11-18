@@ -1,6 +1,6 @@
 ### imports
 import tensorflow as tf
-import read_file_helper as helper
+import filehelper as helper
 import time
 import numpy as np
 import os
@@ -25,6 +25,7 @@ with tf.Session() as sess:
     data = raw_input("Start a sentence:")
 
     for temp in [0.2,0.3,0.5,0.7] :
+      print "Using temperature",temp
       sentence = [ ord(c) for c in data ]
 
       sess.run( model.set_init_state )
