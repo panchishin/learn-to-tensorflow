@@ -1,6 +1,6 @@
 ### imports
 import tensorflow as tf
-import file as helper
+import filehelper as helper
 import time
 import numpy as np
 import os
@@ -8,21 +8,17 @@ import random
 
 import model
 
-labels = model.labels
-neurons = model.neurons
-layers = model.layers
-
-file_name = "temp.save"
 text_length = 100
+steps_per_report = 500
+learning_rate_value = 0.01
+
+print "text_length",text_length,", labels",model.labels, ", neurons",model.neurons, ", layers",model.layers, ", steps_per_report",steps_per_report
+
+
 helper.set("text-input-file.txt",text_length)
-
-steps_per_report = 50
-
-print "text_length",text_length,", labels",labels, ", neurons",neurons, ", layers",layers, ", steps_per_report",steps_per_report
+file_name = "temp.save"
 
 
-
-learning_rate_value = 0.0015
 
 ### Execution
 print "Starting execution with learning rate",learning_rate_value
@@ -38,9 +34,9 @@ with tf.Session() as sess:
     sess.run( tf.initialize_all_variables() )
     sess.run( model.set_init_state )
   print "...done"
+  print " "
 
-
-  for report in range(3):
+  for report in range(2500):
     start_time = time.time()
     # initialize avgloss and num correct to 0 and 0.0 respectively
     avgloss, epoch = 0, 0.0
@@ -59,13 +55,9 @@ with tf.Session() as sess:
 
     avgloss = avgloss / steps_per_report
     learning_rate_value *= 0.99
-    print "Epoch =",epoch," , avgloss =",avgloss,", learning rate",learning_rate_value
-
-    print " "
-    print "Elapse =",(time.time() - start_time),"seconds,",((steps_per_report*text_length)/(time.time() - start_time)),"characters per second"
-    print " "
-    print "saving..."
+    print "Epoch =",epoch,", avg loss =",avgloss,", learn rate =",learning_rate_value
+    print "\telapse =",int(time.time() - start_time),"sec , speed =",int((steps_per_report*text_length)/(time.time() - start_time)),"chars/sec"
     start_time = time.time()
     saver.save(sess,file_name)
-    print "...done in",(time.time() - start_time),"seconds"
+    print "\tsave done in",(time.time() - start_time),"seconds"
     
