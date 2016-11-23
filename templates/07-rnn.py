@@ -5,7 +5,7 @@ from helper_make_xy import makeXY
 labels = 10
 neurons = 20
 layers = 2
-steps_per_epoch = 500
+steps_per_report = 500
 
 ### induction
 
@@ -70,8 +70,8 @@ with tf.Session() as sess:
       # increment correct if result is the same as outy
       correct += 1.0 if result == outy else 0.0
 
-    print "Report =",(report+1)," , correct =",(correct/steps_per_epoch)," , avgloss =",(avgloss / steps_per_epoch)
-    if correct == steps_per_epoch :
+    print "Report =",(report+1)," , correct =",(correct/steps_per_report)," , avgloss =",(avgloss / steps_per_report)
+    if correct == steps_per_report :
       print "Finished early."
       break
 

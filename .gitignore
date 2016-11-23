@@ -1,6 +1,6 @@
 text
 
 **/*.pyc
-**/text-input-file.txt
+**/*.txt
 **/checkpoint
 **/*.save*
