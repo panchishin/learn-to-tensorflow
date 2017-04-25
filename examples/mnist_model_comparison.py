@@ -43,7 +43,7 @@ def model_just_fully_connected() :
   # unused for this model
   keep_prob = tf.placeholder(tf.float32)
 
-  loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y, y_))
+  loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=y, labels=y_))
   train = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
 
   # Test trained model
@@ -85,7 +85,7 @@ def model_conv_pool_x2() :
 
   y = tf.matmul(h_fc1_drop, W_fc2) + b_fc2
 
-  loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y, y_))
+  loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=y, labels=y_))
   train = tf.train.AdamOptimizer(1e-4).minimize(loss)
 
   # Test trained model
@@ -125,7 +125,7 @@ def model_conv(levels) :
   b2 = bias_variable([10])
   y = tf.matmul(h1_drop, W2) + b2
 
-  loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y, y_))
+  loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=y, labels=y_))
   train = tf.train.AdamOptimizer(1e-2).minimize(loss)
 
   # Test trained model
