@@ -3,7 +3,7 @@ import tensorflow as tf
 import os
 
 # file name
-file_name = "save_file.save"
+file_name = "./save_file"
 
 ### constant data
 x  = [[0.,0.],[1.,1.],[1.,0.],[0.,1.]]

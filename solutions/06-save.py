@@ -3,7 +3,7 @@ import tensorflow as tf
 import os
 
 # file name
-file_name = "temp.save"
+file_name = "./temp.save"
 
 ### constant data
 x  = [[0.,0.],[1.,1.],[1.,0.],[0.,1.]]
@@ -40,9 +40,9 @@ train = tf.train.GradientDescentOptimizer(1.0).minimize(loss)
 # run 500 times using all the X and Y
 # print out the loss and any other interesting info
 with tf.Session() as sess:
-  sess.run( tf.initialize_all_variables() )
 
-  if not os.path.exists(file_name) :
+  if not os.path.exists(file_name + ".index") :
+    sess.run( tf.initialize_all_variables() )
     print "No training file found.  Training..."
     print "\nloss"
     for step in range(500) :
