@@ -142,7 +142,7 @@ def train_model_and_report(mnist,model):
   x,y_,keep_prob,train,percent_correct = model
 
   with tf.Session() as sess :
-    sess.run( tf.initialize_all_variables() )
+    sess.run( tf.global_variables_initializer() )
 
     max_count = 10000
     count = 0
