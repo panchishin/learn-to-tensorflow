@@ -86,7 +86,7 @@ Replicate 04-xor-2d, but instead of using constants for input and output, use fe
 Improve 05-feed.py to save the session information at the end of training and to use the saved session information if it exists instead of training.
 
 
-### 07-rnn.py
+### 07-rnn.py (optional)
 Implement a recurrant neural net to accurately predict the next element in a series created by makeXY() in helper_make_xy.py
 
 This creates a series X like [2,3,4,5] and Y = [6]. The series can be a forward progression, a reverse progression, or a constant.  The series may also contain 3, 4, or 5 elements.
@@ -100,4 +100,4 @@ An architecture that has been shown to work is:
 - AdamOptimization(0.01)
 - One training example at a time (no batch processing)
 
-
+*Note* This is marked as optional because it is fairly advanced.  I'd recommend that you master all the previous challenges to **level 3** before adding this challenge to your curriculum
