@@ -31,7 +31,7 @@ with tf.Session() as sess:
   else :
     print "Initializing state..."
     # initialize session variables
-    sess.run( tf.initialize_all_variables() )
+    sess.run( tf.global_variables_initializer() )
     sess.run( model.set_init_state )
   print "...done"
   print " "

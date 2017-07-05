@@ -39,7 +39,7 @@ train = tf.train.GradientDescentOptimizer(1.0).minimize(loss + regularization*0.
 # run 500 times using all the X and Y
 # print out the loss and any other interesting info
 with tf.Session() as sess:
-  sess.run( tf.initialize_all_variables() )
+  sess.run( tf.global_variables_initializer() )
   print "\nloss , regularization"
   for step in range(500) :
     sess.run(train)

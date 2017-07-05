@@ -22,7 +22,7 @@ for learning_rate_value in [ 0.1 , 0.03, 0.01, 0.003, 0.001, 0.0003, 0.0001, 0.0
  with tf.Session() as sess:
 
   # initialize session variables
-  sess.run( tf.initialize_all_variables() )
+  sess.run( tf.global_variables_initializer() )
   sess.run( model.set_init_state )
 
   for report in range(3):

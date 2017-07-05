@@ -15,7 +15,7 @@ update = tf.assign(state, addition )
 # create a session
 with tf.Session() as sess:
   # initialize session variables
-  sess.run( tf.initialize_all_variables() )
+  sess.run( tf.global_variables_initializer() )
 
   print "The starting state is",sess.run(state)
 

@@ -42,7 +42,7 @@ train = tf.train.GradientDescentOptimizer(1.0).minimize(loss)
 with tf.Session() as sess:
 
   if not os.path.exists(file_name + ".index") :
-    sess.run( tf.initialize_all_variables() )
+    sess.run( tf.global_variables_initializer() )
     print "No training file found.  Training..."
     print "\nloss"
     for step in range(500) :
