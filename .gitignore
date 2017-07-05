@@ -4,3 +4,4 @@ text
 **/*.txt
 **/checkpoint
 **/*.save*
+**/cache
