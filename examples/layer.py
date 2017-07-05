@@ -13,13 +13,18 @@ def bias_variable(shape, name="Bias_Variable"):
 def max_pool(x,stride=2, padding='SAME'):
   return tf.nn.max_pool(x, ksize=[1, stride, stride, 1], strides=[1, stride, stride, 1], padding=padding)
 
-def avg_pool(x,stride=2, padding='SAME'):
-  return tf.nn.avg_pool(x, ksize=[1, stride, stride, 1], strides=[1, stride, stride, 1], padding=padding)
+def avg_pool(x,stride=2, padding='SAME', name="Avg_Pool"):
+  return tf.nn.avg_pool(x, ksize=[1, stride, stride, 1], strides=[1, stride, stride, 1], padding=padding, name=name)
 
 def conv( x , layers_in , layers_out , width=6 , stride=1, padding='SAME', name="conv" ):
   w = weight_variable( [width, width, layers_in, layers_out], name=(name + "_weight")) 
   b = bias_variable( [layers_out] ) 
   return tf.add( tf.nn.conv2d( x, w, strides= [1, stride, stride, 1], padding=padding ) , b , name=name)
+
+def deconv( x , layers_in , layers_out , width , shape_as , stride=1, padding='VALID', name="deconv" ):
+  w = weight_variable( [width, width, layers_out, layers_in], name=(name + "_weight")) 
+  b = bias_variable( [layers_out] ) 
+  return tf.add( tf.nn.conv2d_transpose( x, filter=w, output_shape=tf.shape(shape_as), strides=[1, stride, stride, 1], padding=padding ) , b , name=name)
 
 def drop_conv( keep_prob, x , layers_in , layers_out , width=6 , stride=1, padding='SAME', name="drop_conv" ):
   w = weight_variable( [width, width, layers_in, layers_out], name=(name + "_weight") ) 
