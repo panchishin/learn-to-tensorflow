@@ -6,7 +6,7 @@ def get_mnist_data() :
   return input_data.read_data_sets('./cache', one_hot=True)
 
 def parameter_count( shape , name="") :
-  print name," Parametes ",shape,", Count :",reduce(lambda x, y: x*y, shape )
+  print "Parametes ",shape,", Count :",reduce(lambda x, y: x*y, shape ),", Name",name
 
 def weight_variable(shape, name="Weight_Variable"):
   parameter_count(shape,name)
