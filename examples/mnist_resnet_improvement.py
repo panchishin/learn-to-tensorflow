@@ -1,26 +1,25 @@
-from __future__ import absolute_import
 import tensorflow as tf
 import time
 
-def parameter_count( shape , name="") :
-  print name," Parametes ",shape,", Count :",reduce(lambda x, y: x*y, shape )
-
 def get_mnist_data() :
   from tensorflow.examples.tutorials.mnist import input_data
-  return input_data.read_data_sets('./mnist_data', one_hot=True)
+  return input_data.read_data_sets('./cache', one_hot=True)
+
+def parameter_count( shape , name="") :
+  print name," Parametes ",shape,", Count :",reduce(lambda x, y: x*y, shape )
 
 def weight_variable(shape, name="Weight_Variable"):
   parameter_count(shape,name)
   return tf.Variable( tf.truncated_normal(shape, stddev=0.01), name=name )
 
-def bias_variable(shape):
-  return tf.Variable( tf.constant(0.1, shape=shape) )
+def bias_variable(shape, name="Bias_Variable"):
+  return tf.Variable( tf.constant(0.1, shape=shape), name=name)
 
-def max_pool(x,stride=2):
-  return tf.nn.max_pool(x, ksize=[1, stride, stride, 1], strides=[1, stride, stride, 1], padding='SAME')
+def max_pool(x,stride=2, padding='SAME'):
+  return tf.nn.max_pool(x, ksize=[1, stride, stride, 1], strides=[1, stride, stride, 1], padding=padding)
 
-def avg_pool(x,stride=2):
-  return tf.nn.avg_pool(x, ksize=[1, stride, stride, 1], strides=[1, stride, stride, 1], padding='SAME')
+def avg_pool(x,stride=2, padding='SAME'):
+  return tf.nn.avg_pool(x, ksize=[1, stride, stride, 1], strides=[1, stride, stride, 1], padding=padding)
 
 def conv( x , layers_in , layers_out , width=6 , stride=1, padding='SAME', name="conv" ):
   w = weight_variable( [width, width, layers_in, layers_out] , name=name) 
