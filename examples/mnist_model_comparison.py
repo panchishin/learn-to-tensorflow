@@ -176,7 +176,7 @@ Downloading and opening Mnist data...
 """
 
 mnist = get_mnist_data()
-
+"""
 print "\nTraining model_just_fully_connected ..."
 train_model_and_report(mnist,model_just_fully_connected())
 
@@ -194,7 +194,7 @@ train_model_and_report(mnist,model_conv(3))
 
 print "\nTraining model_conv_x4 ..."
 train_model_and_report(mnist,model_conv(4))
-
+"""
 print """
 Complete.
 """
