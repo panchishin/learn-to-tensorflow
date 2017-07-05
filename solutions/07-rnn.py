@@ -19,9 +19,13 @@ x0_hot = tf.one_hot( x0, labels, dtype=tf.float32 )
 y0_hot = tf.one_hot( y0, labels, dtype=tf.float32 )
 
 # RNN layer cell definition
-cell = tf.contrib.rnn.GRUCell( neurons )
-cell = tf.contrib.rnn.DropoutWrapper( cell, output_keep_prob=dropout )
-cell = tf.contrib.rnn.MultiRNNCell( [cell] * layers )
+cells = []
+for _ in range(layers) :
+  cell = tf.contrib.rnn.GRUCell( neurons )
+  cell = tf.contrib.rnn.DropoutWrapper( cell, output_keep_prob=dropout )
+  cells.append(cell)
+
+cell = tf.contrib.rnn.MultiRNNCell( cells )
 
 # RNN output
 output, state = tf.nn.dynamic_rnn(cell, x0_hot, dtype=tf.float32)
@@ -42,7 +46,7 @@ loss = -tf.reduce_mean(tf.reduce_mean( y0_hot * tf.log(y_out) ))
 
 ### training
 # use adam or gradient decent optimizer with 0.01 
-train = tf.train.MomentumOptimizer(1.0,0.5).minimize(loss)
+train = tf.train.AdamOptimizer().minimize(loss)
 
 
 ### Execution
@@ -72,4 +76,3 @@ with tf.Session() as sess:
     if correct == steps_per_report :
       print "Finished early."
       break
-
