@@ -21,10 +21,10 @@ def conv( x , layers_in , layers_out , width=6 , stride=1, padding='SAME', name=
   b = bias_variable( [layers_out] ) 
   return tf.add( tf.nn.conv2d( x, w, strides= [1, stride, stride, 1], padding=padding ) , b , name=name)
 
-def deconv( x , layers_in , layers_out , width , shape_as , stride=1, padding='VALID', name="deconv" ):
+def deconv( x , layers_in , layers_out , width , shape , stride=1, padding='VALID', name="deconv" ):
   w = weight_variable( [width, width, layers_out, layers_in], name=(name + "_weight")) 
   b = bias_variable( [layers_out] ) 
-  return tf.add( tf.nn.conv2d_transpose( x, filter=w, output_shape=tf.shape(shape_as), strides=[1, stride, stride, 1], padding=padding ) , b , name=name)
+  return tf.add( tf.nn.conv2d_transpose( x, filter=w, output_shape=shape, strides=[1, stride, stride, 1], padding=padding ) , b , name=name)
 
 def drop_conv( keep_prob, x , layers_in , layers_out , width=6 , stride=1, padding='SAME', name="drop_conv" ):
   w = weight_variable( [width, width, layers_in, layers_out], name=(name + "_weight") ) 
@@ -36,8 +36,8 @@ def conv_relu( x , layers_in , layers_out , width=6 , stride=1, padding='SAME', 
   h = conv( x , layers_in , layers_out , width , stride, padding, name=(name + "_conv") )
   return tf.nn.relu( h , name=name)
 
-def relu_deconv( x , layers_in , layers_out , width , shape_as , stride=1, padding='VALID', name="relu_deconv" ):
-  return deconv( tf.nn.relu(x) , layers_in , layers_out , width , shape_as , stride, padding, name )
+def relu_deconv( x , layers_in , layers_out , width , shape , stride=1, padding='VALID', name="relu_deconv" ):
+  return deconv( tf.nn.relu(x) , layers_in , layers_out , width , shape , stride, padding, name )
 
 def batch_normalization( x, training, momentum=0.9 ) :
   return tf.layers.batch_normalization( x, training=training, momentum=momentum )

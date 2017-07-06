@@ -14,12 +14,12 @@ stages.append( layer.avg_pool( x_reshape, name="x_in" ) )
 stages.append( layer.conv_relu( stages[-1], 1, 18, width=8, padding="VALID" ) )
 stages.append( layer.conv_relu( stages[-1], 18, 24, width=5, padding="VALID" ) )
 stages.append( layer.conv_relu( stages[-1], 24, 32, width=3, padding="VALID", name="embedding") )
-stages.append( layer.relu_deconv( stages[-1], 32, 24, width=3, shape_as=stages[2] ) )
-stages.append( layer.relu_deconv( stages[-1], 24, 18, width=5, shape_as=stages[1] ) )
-stages.append( layer.relu_deconv( stages[-1], 18, 1, width=8, shape_as=stages[0], name="x_out" ) )
+stages.append( layer.relu_deconv( stages[-1], 32, 24, width=3, shape=tf.shape(stages[2]) ) )
+stages.append( layer.relu_deconv( stages[-1], 24, 18, width=5, shape=tf.shape(stages[1]) ) )
+stages.append( layer.relu_deconv( stages[-1], 18, 1, width=8, shape=tf.shape(stages[0]), name="x_out" ) )
 
 x_in = stages[0]
-x_out = stages[-1]
+x_out = tf.nn.relu(stages[-1])
 embedding = stages[3]
 
 loss = tf.reduce_mean( tf.reduce_mean( tf.square( x_in - x_out ) ) ) 
@@ -49,20 +49,21 @@ print """
 =======================
 """
 
-
-for index in range(1,10000) :
-    result,_ = sess.run( [loss,train], feed_dict={x0:mnist.train.next_batch(100)[0],learning_rate:1e-4})
-    if index == 1 or ( index < 100 and index % 10 == 0 ) or ( index < 1000 and index % 100 == 0 ) or index % 1000 == 0 :
+def doTraining( amount , learning_rate_value ) :
+  for index in range(1,amount+1) :
+    result,_ = sess.run( [loss,train], feed_dict={x0:mnist.train.next_batch(100)[0],learning_rate:learning_rate_value})
+    if index == 1 or ( index < 1000 and index % 100 == 0 ) or index % 1000 == 0 :
         print "index :",index,", loss :",result
 
+doTraining(20000,1e-3)
 
 def showExample() :
     sample_x,sample_y = mnist.train.next_batch(1)
     print "The number is",np.argmax(sample_y[0])
     sample_in,sample_out = sess.run([x_in,x_out],feed_dict={x0:sample_x} )
     print "===== IN ====="
-    print (sample_in.reshape([14,14]) * 10 ).round().astype(int)
+    print (sample_in.reshape([14,14]) * 5 ).round().astype(int)
     print "===== OUT ====="
-    print (sample_out.reshape([14,14]) * 10 ).round().astype(int)
+    print (sample_out.reshape([14,14]) * 5 ).round().astype(int)
 
 showExample()
