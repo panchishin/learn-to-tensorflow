@@ -36,6 +36,9 @@ def conv_relu( x , layers_in , layers_out , width=6 , stride=1, padding='SAME', 
   h = conv( x , layers_in , layers_out , width , stride, padding, name=(name + "_conv") )
   return tf.nn.relu( h , name=name)
 
+def relu_deconv( x , layers_in , layers_out , width , shape_as , stride=1, padding='VALID', name="relu_deconv" ):
+  return deconv( tf.nn.relu(x) , layers_in , layers_out , width , shape_as , stride, padding, name )
+
 def batch_normalization( x, training, momentum=0.9 ) :
   return tf.layers.batch_normalization( x, training=training, momentum=momentum )
 
