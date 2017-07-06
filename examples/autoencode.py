@@ -49,13 +49,13 @@ print """
 =======================
 """
 
-def doTraining( amount , learning_rate_value ) :
-  for index in range(1,amount+1) :
-    result,_ = sess.run( [loss,train], feed_dict={x0:mnist.train.next_batch(100)[0],learning_rate:learning_rate_value})
+def doTraining( batches, learning_rate_value=1e-3, batch_size=200 ) :
+  for index in range(1,batches+1) :
+    result,_ = sess.run( [loss,train], feed_dict={x0:mnist.train.next_batch(batch_size)[0],learning_rate:learning_rate_value})
     if index == 1 or ( index < 1000 and index % 100 == 0 ) or index % 1000 == 0 :
         print "index :",index,", loss :",result
 
-doTraining(20000,1e-3)
+doTraining(20000)
 
 def showExample() :
     sample_x,sample_y = mnist.train.next_batch(1)
@@ -66,4 +66,5 @@ def showExample() :
     print "===== OUT ====="
     print (sample_out.reshape([14,14]) * 5 ).round().astype(int)
 
-showExample()
+for _ in range(5):
+    showExample()
