@@ -63,6 +63,14 @@ def resnet_narrow( x, layers, width , training, narrowing=2, name="resnet_narrow
   result = tf.nn.relu(result)
   return tf.add( x , result, name=name )
 
+def high_low_noise( value , fraction ) :
+    r = tf.random_uniform( value.shape ,  minval=0 , maxval=1 )
+    highs =  tf.maximum( value , tf.cast( r < fraction/2 , tf.float32 ) * tf.reduce_max(value) )
+    high_and_low = tf.maximum(
+        tf.ones_like( value ) * tf.reduce_min( value ) ,
+        ( tf.ones_like( value ) - tf.cast( r < fraction , tf.float32 )*tf.cast( r >= fraction/2 , tf.float32 ) ) * highs )
+    return high_and_low
+
 def fully_connected( x , size_in , size_out, name="fully_connected" ):
   W = weight_variable( [size_in, size_out], name=(name + "_weight") )
   b = bias_variable( [size_out] )
