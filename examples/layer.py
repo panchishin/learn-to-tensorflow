@@ -71,6 +71,12 @@ def high_low_noise( value , fraction ) :
         ( tf.ones_like( value ) - tf.cast( r < fraction , tf.float32 )*tf.cast( r >= fraction/2 , tf.float32 ) ) * highs )
     return high_and_low
 
+def upscaleBilinear( img_in, method=tf.image.ResizeMethod.BILINEAR, scale=2, align_corners=True ) :
+    return tf.image.resize_images( img_in , [ img_in.shape.as_list()[1]*scale,img_in.shape.as_list()[2]*scale], method=method, align_corners=align_corners )
+
+def upscaleFlat( img_in, method=tf.image.ResizeMethod.NEAREST_NEIGHBOR, scale=2, align_corners=False ) :
+    return upscaleBilinear(img_in,method,scale,align_corners)
+
 def fully_connected( x , size_in , size_out, name="fully_connected" ):
   W = weight_variable( [size_in, size_out], name=(name + "_weight") )
   b = bias_variable( [size_out] )
