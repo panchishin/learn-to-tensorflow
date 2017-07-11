@@ -9,7 +9,7 @@ EMBED_SIZE = 20
 
 learning_rate = tf.placeholder( dtype=tf.float32 )
 x0 = tf.placeholder(tf.float32, [None, SIZE*SIZE])
-x_reshape = tf.reshape( x0, [-1,SIZE,SIZE,1], name="x_in" ) 
+x_reshape = tf.reshape( x0, [-1,SIZE,SIZE,1] ) 
 
 stages = []
 stages.append( layer.avg_pool( x_reshape, name="x_in" ) )
