@@ -64,7 +64,7 @@ def resnet_narrow( x, layers, width , training, narrowing=2, name="resnet_narrow
   return tf.add( x , result, name=name )
 
 def high_low_noise( value , fraction ) :
-    r = tf.random_uniform( value.shape ,  minval=0 , maxval=1 )
+    r = tf.random_uniform( [1] + value.shape.as_list()[1:] ,  minval=0 , maxval=1 )
     highs =  tf.maximum( value , tf.cast( r < fraction/2 , tf.float32 ) * tf.reduce_max(value) )
     high_and_low = tf.maximum(
         tf.ones_like( value ) * tf.reduce_min( value ) ,
