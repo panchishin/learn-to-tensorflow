@@ -11,42 +11,36 @@ EMBED_SIZE = 28
 
 learning_rate = tf.placeholder( dtype=tf.float32, name="learning_rate" )
 x0 = tf.placeholder(tf.float32, [None, SIZE*SIZE] , name="x0")
-
-stages = []
-stages.append( tf.reshape( x0, [-1,SIZE,SIZE,1], name="x_in" ) )
-# convolution starts
-stages.append( layer.conv_relu( layer.high_low_noise( stages[-1] , HIGH_LOW_NOISE), 1, 18, width=5, padding="VALID" ) )
-stages.append( layer.max_pool( stages[-1] ) )
-stages.append( layer.conv_relu( stages[-1], 18, 24, width=5, padding="VALID" ) )
-stages.append( layer.max_pool( stages[-1] ) )
-stages.append( layer.conv_relu( stages[-1], 24, EMBED_SIZE, width=4, padding="VALID", name="embedding" ) )
-# embedding
-embedding = tf.reshape( stages[-1] , [tf.shape(stages[-1])[0],EMBED_SIZE] )
-# deconvolution starts
-
-if len(sys.argv) < 2 or sys.argv[1] == "conv" :
-  print "=== adding extra upscale and convolution ==="
-  stages.append( layer.upscaleFlat( stages[-1] , scale=4 ) )
-  stages.append( layer.conv_relu( stages[-1], EMBED_SIZE, 24, width=4, padding="SAME" ) )
-  stages.append( layer.upscaleFlat( stages[-1] , scale=4 ) )
-  stages.append( layer.conv_relu( stages[-1], 24, 18, width=5, padding="SAME" ) )
-  stages.append( layer.upscaleFlat( stages[-1] , scale=2 ) )
-  stages.append( layer.conv_relu( stages[-1], 18, 1, width=5, padding="VALID" ) )
-
-if len(sys.argv) > 1 and sys.argv[1] == "deconv" :
-  print "=== using deconvolution ==="
-  stages.append( layer.relu_deconv( stages[-1], EMBED_SIZE, 24, width=4, shape=tf.shape(stages[4]) ) ) 
-  stages.append( layer.upscaleFlat( stages[-1] , scale=2 ) )
-  stages.append( layer.relu_deconv( stages[-1], 24, 18, width=5, shape=tf.shape(stages[2]) ) ) 
-  stages.append( layer.upscaleFlat( stages[-1] , scale=2 ) )
-  stages.append( layer.relu_deconv( stages[-1], 18, 1, width=5, shape=tf.shape(stages[0]) ) ) 
+x_reshape = tf.reshape( x0, [-1,SIZE,SIZE,1], name="x_in" )
+x_noisy = layer.high_low_noise( x_reshape , HIGH_LOW_NOISE)
 
 
-stages.append( tf.nn.relu( stages[-1] , name="x_out" ) )
+def convolution_layers(x_in, layer_sizes=[1,18,24,28], width_sizes=[5,5,4]) :
+  stages = [x_in]
+  for in_size,out_size,width,end in zip(layer_sizes[:-1],layer_sizes[1:],width_sizes,range(len(width_sizes)-1,-1,-1)) :
+    stages.append( layer.conv_relu( stages[-1], in_size, out_size, width=width, padding="VALID" ) )
+    if end != 0 :
+      stages.append( layer.max_pool( stages[-1] ) )
+  return stages
 
-x_reshape = stages[0]
-x_in = stages[0]
-x_out = stages[-1]
+def deconvolution_layers(stages, layer_sizes=[1,18,24,28], width_sizes=[5,5,4]) :
+  for in_size,out_size,width,end in zip(layer_sizes[:-1],layer_sizes[1:],width_sizes,range(len(width_sizes)))[::-1] :
+    stages.append( layer.relu_deconv( stages[-1], out_size, in_size, width=width, shape=tf.shape(stages[end*2]) ) ) 
+    if end != 0 :
+      stages.append( layer.upscaleFlat( stages[-1] , scale=2 ) )
+  return stages
+
+def autoencode(x_in, layer_sizes=[1,18,24,28], width_sizes=[5,5,4]) :
+  stages = convolution_layers(x_in, layer_sizes, width_sizes)
+  embedding = stages[-1]
+  return embedding, deconvolution_layers(stages, layer_sizes, width_sizes)
+
+
+embedding, stages = autoencode( x_noisy , layer_sizes=[1,18,24,EMBED_SIZE], width_sizes=[5,5,4])
+embedding = tf.reshape( embedding , [tf.shape(stages[-1])[0],EMBED_SIZE] )
+
+x_in = x_reshape
+x_out = tf.nn.relu( stages[-1] , name="x_out" )
 
 encode_loss = tf.reduce_mean( tf.reduce_mean( tf.square( x_in - x_out ) ) )
 encode_train = tf.train.AdamOptimizer(1e-3).minimize(encode_loss)
