@@ -1,0 +1,20 @@
+Parametes  [5, 5, 1, 18] , Count : 450 , Name conv_relu_conv_weight
+Parametes  [3, 3, 18, 18] , Count : 2916 , Name resnet_block_1_weight
+Parametes  [3, 3, 18, 18] , Count : 2916 , Name resnet_block_2_weight
+Parametes  [5, 5, 18, 24] , Count : 10800 , Name conv_relu_conv_weight
+Parametes  [3, 3, 24, 24] , Count : 5184 , Name resnet_block_1_weight
+Parametes  [3, 3, 24, 24] , Count : 5184 , Name resnet_block_2_weight
+Parametes  [4, 4, 24, 28] , Count : 10752 , Name conv_relu_conv_weight
+Parametes  [3, 3, 28, 28] , Count : 7056 , Name resnet_block_1_weight
+Parametes  [3, 3, 28, 28] , Count : 7056 , Name resnet_block_2_weight
+==== Embedding ====
+==== Deconvolution ====
+Parametes  [3, 3, 28, 28] , Count : 7056 , Name resnet_block_1_weight
+Parametes  [3, 3, 28, 28] , Count : 7056 , Name resnet_block_2_weight
+Parametes  [4, 4, 24, 28] , Count : 10752 , Name relu_deconv_weight
+Parametes  [3, 3, 24, 24] , Count : 5184 , Name resnet_block_1_weight
+Parametes  [3, 3, 24, 24] , Count : 5184 , Name resnet_block_2_weight
+Parametes  [5, 5, 18, 24] , Count : 10800 , Name relu_deconv_weight
+Parametes  [3, 3, 18, 18] , Count : 2916 , Name resnet_block_1_weight
+Parametes  [3, 3, 18, 18] , Count : 2916 , Name resnet_block_2_weight
+Parametes  [5, 5, 1, 18] , Count : 450 , Name relu_deconv_weight

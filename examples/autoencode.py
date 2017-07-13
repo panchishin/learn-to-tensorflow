@@ -1,51 +1,41 @@
 import tensorflow as tf
 import numpy as np
 import layer
-import sys
-print sys.argv
-
 
 SIZE = 28
 HIGH_LOW_NOISE = .02
 EMBED_SIZE = 28
-
-learning_rate = tf.placeholder( dtype=tf.float32, name="learning_rate" )
-training_flag = tf.Variable( tf.constant(True), name="training_flag")
 
 x0 = tf.placeholder(tf.float32, [None, SIZE*SIZE] , name="x0")
 x_reshape = tf.reshape( x0, [-1,SIZE,SIZE,1], name="x_in" )
 x_noisy = layer.high_low_noise( x_reshape , HIGH_LOW_NOISE)
 
 
-def convolution_layers(x_in, layer_sizes=[1,18,24,28], width_sizes=[5,5,4], training=True, resnets=0) :
+def convolution_layers(x_in, layer_sizes=[1,18,24,28], width_sizes=[5,5,4]) :
   stages = [x_in]
   for in_size,out_size,width,end in zip(layer_sizes[:-1],layer_sizes[1:],width_sizes,range(len(width_sizes)-1,-1,-1)) :
     stages.append( layer.conv_relu( stages[-1], in_size, out_size, width=width, padding="VALID" ) )
-    for _ in range(resnets) :
-      stages.append( layer.resnet_block( stages[-1], out_size, 3 , training ) )
     if end != 0 :
       stages.append( layer.max_pool( stages[-1] ) )
   return stages
 
-def deconvolution_layers(stages, layer_sizes=[1,18,24,28], width_sizes=[5,5,4], training=True, resnets=0) :
+def deconvolution_layers(stages, layer_sizes=[1,18,24,28], width_sizes=[5,5,4]) :
   for in_size,out_size,width,end in zip(layer_sizes[:-1],layer_sizes[1:],width_sizes,range(len(width_sizes)))[::-1] :
-    for _ in range(resnets) :
-      stages.append( layer.resnet_block( stages[-1], out_size, 3 , training ) )
-    stages.append( layer.relu_deconv( stages[-1], out_size, in_size, width=width, shape=tf.shape(stages[end*(2+resnets)]) ) ) 
+    stages.append( layer.relu_deconv( stages[-1], out_size, in_size, width=width, shape=tf.shape(stages[end*2]) ) ) 
     if end != 0 :
       stages.append( layer.upscaleFlat( stages[-1] , scale=2 ) )
   return stages
 
-def autoencode(x_in, layer_sizes=[1,18,24,28], width_sizes=[5,5,4], training=True, resnets=1) :
+def autoencode(x_in, layer_sizes=[1,18,24,28], width_sizes=[5,5,4]) :
   print "==== Convolution ===="
-  stages = convolution_layers(x_in, layer_sizes, width_sizes, training=training, resnets=resnets)
+  stages = convolution_layers(x_in, layer_sizes, width_sizes)
   print "==== Embedding ===="
   embedding = stages[-1]
   print "==== Deconvolution ===="
-  return embedding, deconvolution_layers(stages, layer_sizes, width_sizes, training=training, resnets=resnets)
+  return embedding, deconvolution_layers(stages, layer_sizes, width_sizes)
 
 
-embedding, stages = autoencode( x_noisy , layer_sizes=[1,18,24,EMBED_SIZE], width_sizes=[5,5,4], training=training_flag, resnets=1)
+embedding, stages = autoencode( x_noisy , layer_sizes=[1,18,24,EMBED_SIZE], width_sizes=[5,5,4])
 
 
 x_in = x_reshape
@@ -56,10 +46,8 @@ encode_train = tf.train.AdamOptimizer(1e-3).minimize(encode_loss)
 
 
 y0 = tf.placeholder(tf.float32, [None, 10], name="y0")
-freeze_embedding = tf.placeholder(tf.bool, name="freeze_embedding")
-embedding_flat = tf.reshape( embedding , [tf.shape(stages[-1])[0],EMBED_SIZE] )
-filter_embedding = tf.cond( freeze_embedding , lambda: tf.stop_gradient(embedding_flat) , lambda: tf.identity(embedding_flat) )
-out_fc_1 = tf.nn.relu( layer.fully_connected( filter_embedding , EMBED_SIZE , EMBED_SIZE ) )
+embedding_flat = tf.reshape( embedding , [-1,EMBED_SIZE] )
+out_fc_1 = tf.nn.relu( layer.fully_connected( embedding_flat , EMBED_SIZE , EMBED_SIZE ) )
 y_logit = layer.fully_connected( out_fc_1 , EMBED_SIZE , 10 )
 y_out = tf.nn.softmax( y_logit )
 
@@ -101,34 +89,34 @@ def doAutoEncodeTraining( batches, batch_size=200 ) :
   print "doAutoEncodeTraining"
   for index in range(1,batches+1) :
     batch_x , batch_y = mnist.train.next_batch(batch_size)
-    batch_correct,result,_ = sess.run( [correct,encode_loss,encode_train], feed_dict={x0:batch_x,y0:batch_y,freeze_embedding:True})
+    batch_correct,result,_ = sess.run( [correct,encode_loss,encode_train], feed_dict={x0:batch_x,y0:batch_y})
     if index == 1 or ( index < 100 and index % 10 == 0 ) or ( index < 1000 and index % 100 == 0 ) or index % 1000 == 0 :
-        correct_result = sess.run( correct, feed_dict={training_flag:False,x0:mnist.test.images,y0:mnist.test.labels,freeze_embedding:True})
+        correct_result = sess.run( correct, feed_dict={x0:mnist.test.images,y0:mnist.test.labels})
         print "index : %5d, loss: %5.3f, train error %4.1f, test error %4.1f percent" % ( index, result, 100*(1 - batch_correct), 100*(1 - correct_result) )
 
-def doClassifyTraining( batches, batch_size=200, freeze=True ) :
+def doClassifyTraining( batches, batch_size=200) :
   print "doClassifyTraining"
   for index in range(1,batches+1) :
     batch_x , batch_y = mnist.train.next_batch(batch_size)
-    batch_correct,result,_ = sess.run( [correct,classify_loss,classify_train], feed_dict={x0:batch_x,y0:batch_y,freeze_embedding:freeze})
+    batch_correct,result,_ = sess.run( [correct,classify_loss,classify_train], feed_dict={x0:batch_x,y0:batch_y})
     if index == 1 or ( index < 100 and index % 10 == 0 ) or ( index < 1000 and index % 100 == 0 ) or index % 1000 == 0 :
-        correct_result = sess.run( correct, feed_dict={training_flag:False,x0:mnist.test.images,y0:mnist.test.labels,freeze_embedding:freeze})
+        correct_result = sess.run( correct, feed_dict={x0:mnist.test.images,y0:mnist.test.labels})
         print "index : %5d, loss: %5.3f, train error %4.1f, test error %4.1f percent" % ( index, result, 100*(1 - batch_correct), 100*(1 - correct_result) )
 
-def doTotalTraining( batches, batch_size=200, freeze=True ) :
+def doTotalTraining( batches, batch_size=200) :
   print "doTotalTraining"
   for index in range(1,batches+1) :
     batch_x , batch_y = mnist.train.next_batch(batch_size)
-    batch_correct,result,_ = sess.run( [correct,total_loss,total_train], feed_dict={x0:batch_x,y0:batch_y,freeze_embedding:freeze})
+    batch_correct,result,_ = sess.run( [correct,total_loss,total_train], feed_dict={x0:batch_x,y0:batch_y})
     if index == 1 or ( index < 100 and index % 10 == 0 ) or ( index < 1000 and index % 100 == 0 ) or index % 1000 == 0 :
-        correct_result = sess.run( correct, feed_dict={training_flag:False,x0:mnist.test.images,y0:mnist.test.labels,freeze_embedding:freeze})
+        correct_result = sess.run( correct, feed_dict={x0:mnist.test.images,y0:mnist.test.labels})
         print "index : %5d, loss: %5.3f, train error %4.1f, test error %4.1f percent" % ( index, result, 100*(1 - batch_correct), 100*(1 - correct_result) )
 
 
 def showExample(count) :
   for _ in range(count) :
     sample_x,sample_y_in = mnist.train.next_batch(1)
-    sample_in,sample_out,sample_y_out = sess.run([x_in,x_out,y_out],feed_dict={training_flag:False,x0:sample_x,freeze_embedding:True} )
+    sample_in,sample_out,sample_y_out = sess.run([x_in,x_out,y_out],feed_dict={x0:sample_x} )
     print"Estimated / Actual class [chance] : ",
     print np.argmax(sample_y_out[0]),"[",int(round(100.0*sample_y_out[0][np.argmax(sample_y_out[0])])),"]",
     print "/",
@@ -140,7 +128,7 @@ def showExample(count) :
 
 
 def confusion() :
-  y_in_result,y_out_result = sess.run( [y_in_index,y_out_index], feed_dict={training_flag:False,x0:mnist.test.images,y0:mnist.test.labels,freeze_embedding:True})
+  y_in_result,y_out_result = sess.run( [y_in_index,y_out_index], feed_dict={x0:mnist.test.images,y0:mnist.test.labels})
   for in_index in range(10) :
     print in_index," = ",
     for out_index in range(10) :
@@ -151,7 +139,7 @@ def confusion() :
 
 
 def error_result() :
-  correct_result = sess.run( correct, feed_dict={training_flag:False,x0:mnist.test.images,y0:mnist.test.labels,freeze_embedding:True})
+  correct_result = sess.run( correct, feed_dict={x0:mnist.test.images,y0:mnist.test.labels})
   return round(100*(1 - correct_result))
 
 
@@ -167,5 +155,3 @@ error_result()
 
 help()
 
-
-doTotalTraining(30000)
