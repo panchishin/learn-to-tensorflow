@@ -10,6 +10,13 @@ def weight_variable(shape, name="Weight_Variable"):
 def bias_variable(shape, name="Bias_Variable"):
   return tf.Variable( tf.constant(0.1, shape=shape), name=name)
 
+def upscaleBilinear( img_in, method=tf.image.ResizeMethod.BILINEAR, scale=2, align_corners=True ) :
+  return upscaleBilinear(img_in,method,scale,align_corners)
+
+def upscaleFlat( img_in, method=tf.image.ResizeMethod.NEAREST_NEIGHBOR, scale=2, align_corners=False ) :
+  target_shape = tf.slice( tf.shape(img_in) , [1], [2] ) * scale
+  return tf.image.resize_images( img_in, target_shape, method=method, align_corners=align_corners )
+
 def max_pool(x,stride=2, padding='SAME'):
   return tf.nn.max_pool(x, ksize=[1, stride, stride, 1], strides=[1, stride, stride, 1], padding=padding)
 
@@ -70,13 +77,6 @@ def high_low_noise( value , fraction ) :
         tf.ones_like( value ) * tf.reduce_min( value ) ,
         ( tf.ones_like( value ) - tf.cast( r < fraction , tf.float32 )*tf.cast( r >= fraction/2 , tf.float32 ) ) * highs )
     return high_and_low
-
-def upscaleBilinear( img_in, method=tf.image.ResizeMethod.BILINEAR, scale=2, align_corners=True ) :
-    target_shape = tf.slice( tf.shape(img_in) , [1], [2] ) * scale
-    return tf.image.resize_images( img_in, target_shape, method=method, align_corners=align_corners )
-
-def upscaleFlat( img_in, method=tf.image.ResizeMethod.NEAREST_NEIGHBOR, scale=2, align_corners=False ) :
-    return upscaleBilinear(img_in,method,scale,align_corners)
 
 def fully_connected( x , size_in , size_out, name="fully_connected" ):
   W = weight_variable( [size_in, size_out], name=(name + "_weight") )
