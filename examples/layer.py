@@ -12,10 +12,10 @@ def bias_variable(shape, name="Bias_Variable"):
   return tf.Variable( tf.constant(0.1, shape=shape), name=name)
 
 def upscaleBilinear( img_in, method=tf.image.ResizeMethod.BILINEAR, scale=2, align_corners=True ) :
-  return upscaleBilinear(img_in,method,scale,align_corners)
+  return upscaleFlat(img_in,method,scale,align_corners)
 
 def upscaleFlat( img_in, method=tf.image.ResizeMethod.NEAREST_NEIGHBOR, scale=2, align_corners=False ) :
-  target_shape = tf.slice( tf.shape(img_in) , [1], [2] ) * scale
+  target_shape = [ img_in.shape[1].value * scale , img_in.shape[2].value * scale ]
   return tf.image.resize_images( img_in, target_shape, method=method, align_corners=align_corners )
 
 def max_pool(x,stride=2, padding='SAME'):
@@ -23,12 +23,12 @@ def max_pool(x,stride=2, padding='SAME'):
 
 def resnet_downscale(x, name="resnet_pool") :
   pos = max_pool( tf.nn.relu(x) )
-  zer = tf.zeros_like(pos)
-  return tf.concat( values=[pos,zer], axis=3 , name=name)
+  neg = max_pool( tf.nn.relu(-x) )
+  return tf.concat( values=[pos,neg], axis=3 , name=name)
 
 def resnet_upscale(x, name="resnet_upscale") :
   upscaled = upscaleFlat( x )
-  sliced = tf.slice( upscaled, [0,0,0,0] , [-1,-1,-1,tf.shape(upscaled)[3]/2] )
+  sliced = tf.slice( upscaled, [0,0,0,0] , [-1,-1,-1,upscaled.shape[3].value/2] )
   return sliced
 
 def avg_pool(x,stride=2, padding='SAME', name="Avg_Pool"):
@@ -61,17 +61,17 @@ def batch_normalization( x, training, momentum=0.9 ) :
   return tf.layers.batch_normalization( x, training=training, momentum=momentum )
 
 def single_resnet_block( x, layers, width , training, momentum=0.9, name="single_resnet_block" ) :
-  result = batch_normalization( x , training, momentum=momentum )
+  result = batch_normalization( x , training=training, momentum=momentum )
   result = tf.nn.relu(result)
   return conv( result, layers, layers, width=width, name=name )
 
 def resnet_block( x, layers, width , training, momentum=0.9, name="resnet_block" ) :
-  result = single_resnet_block( x,      layers, width, training, momentum=momentum, name=(name + "_1") )
-  result = single_resnet_block( result, layers, width, training, momentum=momentum, name=(name + "_2") )
+  result = single_resnet_block( x,      layers, width, training=training, momentum=momentum, name=(name + "_1") )
+  result = single_resnet_block( result, layers, width, training=training, momentum=momentum, name=(name + "_2") )
   return tf.add( x , result, name=name )
 
 def resnet_narrow( x, layers, width , training, narrowing=8, momentum=0.9, name="resnet_narrow" ) :
-  result = batch_normalization( x , training , momentum=momentum )
+  result = batch_normalization( x , training=training , momentum=momentum )
   result = tf.nn.relu(result)
   result = conv( result, layers, layers/narrowing, width=1, name=(name + "_narrowing") )
   result = tf.nn.relu(result)
