@@ -23,7 +23,7 @@ def max_pool(x,stride=2, padding='SAME'):
 
 def resnet_downscale(x, name="resnet_pool") :
   pos = max_pool( tf.nn.relu(x) )
-  zer = tf.zeros_like(x)
+  zer = tf.zeros_like(pos)
   return tf.concat( values=[pos,zer], axis=3 , name=name)
 
 def resnet_upscale(x, name="resnet_upscale") :
