@@ -21,6 +21,16 @@ def upscaleFlat( img_in, method=tf.image.ResizeMethod.NEAREST_NEIGHBOR, scale=2,
 def max_pool(x,stride=2, padding='SAME'):
   return tf.nn.max_pool(x, ksize=[1, stride, stride, 1], strides=[1, stride, stride, 1], padding=padding)
 
+def resnet_downscale(x, name="resnet_pool") :
+  pos = max_pool( tf.nn.relu(x) )
+  zer = tf.zeros_like(x)
+  return tf.concat( values=[pos,zer], axis=3 , name=name)
+
+def resnet_upscale(x, name="resnet_upscale") :
+  upscaled = upscaleFlat( x )
+  sliced = tf.slice( upscaled, [0,0,0,0] , [-1,-1,-1,tf.shape(upscaled)[3]/2] )
+  return sliced
+
 def avg_pool(x,stride=2, padding='SAME', name="Avg_Pool"):
   return tf.nn.avg_pool(x, ksize=[1, stride, stride, 1], strides=[1, stride, stride, 1], padding=padding, name=name)
 
