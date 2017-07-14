@@ -60,8 +60,8 @@ def resnet_block( x, layers, width , training, momentum=0.9, name="resnet_block"
   result = single_resnet_block( result, layers, width, training, momentum=momentum, name=(name + "_2") )
   return tf.add( x , result, name=name )
 
-def resnet_narrow( x, layers, width , training, narrowing=2, name="resnet_narrow" ) :
-  result = batch_normalization( x , training )
+def resnet_narrow( x, layers, width , training, narrowing=8, momentum=0.9, name="resnet_narrow" ) :
+  result = batch_normalization( x , training , momentum=momentum )
   result = tf.nn.relu(result)
   result = conv( result, layers, layers/narrowing, width=1, name=(name + "_narrowing") )
   result = tf.nn.relu(result)
