@@ -3,9 +3,10 @@ import tensorflow as tf
 def parameter_count( shape , name="") :
   print "Parametes ",shape,", Count :",reduce(lambda x, y: x*y, shape ),", Name",name
 
+xavier = tf.contrib.layers.xavier_initializer_conv2d()
 def weight_variable(shape, name="Weight_Variable"):
   parameter_count(shape,name)
-  return tf.Variable( tf.truncated_normal(shape, stddev=0.01), name=name)
+  return tf.Variable( xavier(shape=shape), name=name)
 
 def bias_variable(shape, name="Bias_Variable"):
   return tf.Variable( tf.constant(0.1, shape=shape), name=name)
