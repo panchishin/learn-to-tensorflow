@@ -1,0 +1,15 @@
+body {
+    margin : 1em;
+    padding : 0em;
+    font-size : 12px;
+    background-color: #eee;
+}
+button {
+    padding : .25em;
+    margin : .25em;
+    width : 12em;
+}
+img.mnist {
+    height : 28px;
+    width : 28px;
+}
