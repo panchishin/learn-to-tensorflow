@@ -252,22 +252,34 @@ class ResetSession:
 
 all_embeddings = []
 
-def calculateDistance(index1,index2) :
-    return spatial.distance.cosine( all_embeddings[index1], all_embeddings[index2] )
-
 def updateEmbeddings() :
+    global all_embeddings
     all_embeddings = sess.run(conv5e,feed_dict={x0:mnist.test.images} ).reshape([-1,SIZE])
 
-def nearestNeighbour(index) :
-    index_list = range(len(mnist.test.images))
-    distances = np.array([ calculateDistance(index,other) for other in index_list ])
+class UpdateEmbeddings :
+    def on_get(self, req, resp):
+      updateEmbeddings()
+      resp.body = json.dumps( { 'response': 'done'} )
+
+def calculateDistance(index1,index2) :
+    return spatial.distance.cosine( index1, index2 )
+
+def nearestNeighbour(embedding) :
+    index_list = range(all_embeddings.shape[0])
+    distances = np.array([ calculateDistance(embedding,all_embeddings[other]) for other in index_list ])
     nearest = np.argsort( distances )[:10]
     return np.array(index_list)[nearest]
 
 class Similar:
     def on_get(self, req, resp, index):
-        names = nearestNeighbour(index).tolist()
-        resp.body = json.dumps( { 'response' , names } )
+        names = nearestNeighbour(all_embeddings[int(index)]).tolist()
+        resp.body = json.dumps( { 'response' : names } )
+
+class Difference:
+    def on_get(self, req, resp, positive, negative):
+        names = nearestNeighbour( all_embeddings[int(positive)] * 2 - all_embeddings[int(negative)] ).tolist()
+        resp.body = json.dumps( { 'response' : names } )
+
 
 
 print """
@@ -280,10 +292,8 @@ api.add_route('/ping', Ping())
 api.add_route('/view/{file_name}', Display())
 api.add_route('/layer{layer}/{index}/{junk}', LayerImage())
 api.add_route('/learn/{index}', DoLearning())
-api.add_route('/resetSession', ResetSession())
-
-
-
-
-
+api.add_route('/reset_session', ResetSession())
+api.add_route('/update_embeddings', UpdateEmbeddings())
+api.add_route('/similar/{index}', Similar())
+api.add_route('/difference/{positive}/{negative}', Difference())
 

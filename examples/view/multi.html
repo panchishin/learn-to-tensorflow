@@ -8,20 +8,21 @@
 </head>
 <body ng-controller="gardenController">
 
-	<h1>Digits</h1>
-        <button type="button" class="btn btn-primary btn-sm" ng-click="resetSession()">Reset Net</button>
+        <button type="button" class="btn btn-primary btn-sm" ng-click="reset_session()">Reset Net</button>
+        <button type="button" class="btn btn-primary btn-sm" ng-click="update_embeddings()">Update Embeddings</button>
         <button type="button" class="btn btn-primary btn-sm" ng-click="randomizeImage()">Randomize Image</button>
+        Iterations <input ng-model="data.iterations" type="text">
         <hr>
         <p>Original images : 1024 data points.</p>
         <div>
 	        <span ng-repeat="index in data.images">
-	          	<img class="mnist" src="/layer-1/{{index}}/{{data.training_sessions}}"></img>
+	          	<img class="mnist" src="/layer-1/{{index}}/{{0}}" ng-click="similar(index)"></img>
 	        </span>
 	</div>
         <p>Noise images : 1024 data points, 2% data corruption</p>
         <div>
 	        <span ng-repeat="index in data.images">
-	          	<img class="mnist" src="/layer0/{{index}}/{{data.training_sessions}}"></img>
+	          	<img class="mnist" src="/layer0/{{index}}/{{0}}"></img>
 	        </span>
 	        <button type="button" class="btn btn-primary btn-sm" ng-click="learn(0)">Train Layer</button>
 	</div>
@@ -56,11 +57,22 @@
         <p>5th Layer : 32 data points. {{data.training_sessions[4]}} epochs</p>
         <div>
 	        <span ng-repeat="index in data.images">
-	          	<img class="mnist" src="/layer5/{{index}}/{{data.training_sessions}}"></img>
+	          	<img class="mnist" src="/layer5/{{index}}/{{data.training_sessions}}" ng-click="similar(index)"></img>
 	        </span>
 	        <button type="button" class="btn btn-primary btn-sm" ng-click="learn(5)">Train All</button>
         </div>
         <p>All Layers : {{data.training_sessions[5]}} epochs</p>
-
+        <p>Similar images</p>
+        <div>
+	        <span ng-repeat="index in data.similar_images">
+	          	<img class="mnist" src="/layer-1/{{index}}/{{0}}" ng-click="subtract(index)"></img>
+	        </span>
+	</div>
+        <p>Subtracting image</p>
+        <div>
+	        <span ng-repeat="index in data.difference_images">
+	          	<img class="mnist" src="/layer-1/{{index}}/{{0}}" ng-click="subtract(index)"></img>
+	        </span>
+	</div>
 </body>
 </html>
