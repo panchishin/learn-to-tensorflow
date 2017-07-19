@@ -10,18 +10,27 @@
 
 	<h1>Digits</h1>
         <button type="button" class="btn btn-primary btn-sm" ng-click="randomizeImage()">Randomize Image</button>
-        <button type="button" class="btn btn-primary btn-sm" ng-click="learn()">Train Network</button> (trained {{data.training_sessions}} times)
+        <button type="button" class="btn btn-primary btn-sm" ng-click="learn()">Train Network</button>
         <hr>
+        <p>Original images :</p>
         <div>
 	        <span ng-repeat="index in data.images">
 	          	<img class="mnist" src="/display/{{index}}/{{data.training_sessions}}"></img>
 	        </span>
 	</div>
+        <p>1 Layer</p>
+        <div>
+	        <span ng-repeat="index in data.images">
+	          	<img class="mnist" src="/noise/{{index}}/{{data.training_sessions}}"></img>
+	        </span>
+        </div>
+        <p>Pass to neural net :</p>
         <div>
 	        <span ng-repeat="index in data.images">
 	          	<img class="mnist" src="/dream/{{index}}/{{data.training_sessions}}"></img>
 	        </span>
         </div>
+        <p>Result after {{data.training_sessions}} epochs of training.</p>
 
 </body>
 </html>

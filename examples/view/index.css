@@ -10,6 +10,9 @@ button {
     width : 12em;
 }
 img.mnist {
-    height : 28px;
-    width : 28px;
+    height : 32px;
+    width : 32px;
+}
+p {
+    margin: 0px;
 }
