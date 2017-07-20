@@ -1,0 +1,36 @@
+<html ng-app="garden">
+<head>
+	<title>Image Browser</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+	<script src="/view/index.js"></script>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/view/index.css"/>
+</head>
+<body ng-controller="gardenController">
+
+	<h1>Digits</h1>
+        <button type="button" class="btn btn-primary btn-sm" ng-click="randomizeImage()">Randomize Image</button>
+        <button type="button" class="btn btn-primary btn-sm" ng-click="learn()">Train Network</button>
+        <hr>
+        <p>Original images :</p>
+        <div>
+	        <span ng-repeat="index in data.images">
+	          	<img class="mnist" src="/display/{{index}}/{{data.training_sessions}}"></img>
+	        </span>
+	</div>
+        <p>1 Layer</p>
+        <div>
+	        <span ng-repeat="index in data.images">
+	          	<img class="mnist" src="/noise/{{index}}/{{data.training_sessions}}"></img>
+	        </span>
+        </div>
+        <p>Pass to neural net :</p>
+        <div>
+	        <span ng-repeat="index in data.images">
+	          	<img class="mnist" src="/dream/{{index}}/{{data.training_sessions}}"></img>
+	        </span>
+        </div>
+        <p>Result after {{data.training_sessions}} epochs of training.</p>
+
+</body>
+</html>
