@@ -1,11 +1,11 @@
-### imports
+# -- imports --
 import tensorflow as tf
 
-### constant data
-x  = [[0.,0.],[1.,1.],[1.,0.],[0.,1.]]
-y_ = [[1.,0.],[1.,0.],[0.,1.],[0.,1.]]
+# -- constant data --
+x = # TODO
+y_ = # TODO
 
-### induction
+# -- induction --
 # 1x2 input -> 2x3 hidden sigmoid -> 3x1 sigmoid output
 
 # Layer 0 = # TODO
@@ -23,7 +23,7 @@ b2 = # TODO
 y_out = # TODO
 
 
-### loss
+# -- loss --
 
 # loss : sum of the squares of y0 - y_out
 loss = # TODO
@@ -32,22 +32,22 @@ loss = # TODO
 train = # TODO
 
 
-### training
+# -- training --
 # run 500 times using all the X and Y
 # print out the loss and any other interesting info
 with tf.Session() as sess:
-  # TODO session execution command here
-  print "\nloss"
-  for step in range(500) :
     # TODO session execution command here
-    if (step + 1) % 100 = # TODO
-      print # TODO session execution command here
+    print "\nloss"
+    for step in range(500):
+        # TODO session execution command here
+        if (step + 1) % 100 = # TODO
+            print # TODO session execution command here
 
-  results = # TODO calculate and return m1,b1,m2,b2,y_,loss
-  labels  = "m1,b1,m2,b2,y_out,loss".split(",")
-  for label,result in zip(*(labels,results)) :
-    print ""
-    print label
-    print result
+    results = # TODO
+    labels = # TODO
+    for label, result in zip(*(labels, results)):
+        print ""
+        print label
+        print result
 
 print ""

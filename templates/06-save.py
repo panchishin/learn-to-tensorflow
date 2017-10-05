@@ -1,15 +1,15 @@
-### imports
+# -- imports --
 import tensorflow as tf
 import os
 
 # file name
-file_name = "./save_file"
+file_name = # TODO
 
-### constant data
-x  = [[0.,0.],[1.,1.],[1.,0.],[0.,1.]]
-y_ = [[1.,0.],[1.,0.],[0.,1.],[0.,1.]]
+# -- constant data --
+x = # TODO
+y_ = # TODO
 
-### induction
+# -- induction --
 # 1x2 input -> 2x3 hidden sigmoid -> 3x1 sigmoid output
 
 # Layer 0 = # TODO
@@ -27,42 +27,43 @@ b2 = # TODO
 y_out = # TODO
 
 
-### loss
+# -- loss --
 
-# loss : sum of the squares of y0 - y_
+# loss : sum of the squares of y0 - y_out
 loss = # TODO
 
 # training step : gradient decent (1.0) to minimize loss
 train = # TODO
 
 
-### training
+# -- training --
 # run 500 times using all the X and Y
 # print out the loss and any other interesting info
 with tf.Session() as sess:
-  # TODO session execution command here
 
-  if not os.path.exists(file_name) :
-    print "No training file found.  Training..."
-    print "\nloss"
-    for step in range(500) :
-      # TODO session execution command here
-      if (step + 1) % 100 = # TODO
-        print # TODO session execution command here
+    if not os.path.exists(file_name + ".index"):
+        # TODO session execution command here
+        print "No training file found.  Training..."
+        print "\nloss"
+        for step in range(500):
+            # TODO session execution command here
+            if (step + 1) % 100 = # TODO
+                print # TODO session execution command here
+        print "Training complete.  Saving..."
+        saver = # TODO
+        saver.save(sess, file_name)
+        print "Model saved to file", file_name
+        print "Run program again to use model."
 
-    print "Training complete.  Saving..."
-    # TODO save to file 
-    print "Model saved to file",file_name
-    print "Run program again to use model."
-
-  else :
-    print "Training file",file_name,"found."
-    # TODO restore from file
-    results = # TODO calculate and return m1,b1,m2,b2,y_,loss
-    labels  = "m1,b1,m2,b2,y_out,loss".split(",")
-    for label,result in zip(*(labels,results)) :
-      print ""
-      print label
-      print result
+    else:
+        print "Training file", file_name, "found."
+        saver = # TODO
+        saver.restore(sess, file_name)
+        results = # TODO
+        labels = # TODO
+        for label, result in zip(*(labels, results)):
+            print ""
+            print label
+            print result
 
 print ""

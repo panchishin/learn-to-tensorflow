@@ -9,7 +9,7 @@ If you need a hint or some starter code to give you structure there are template
 
 
 ## How to use this resource
-These are skills building exercises.  It is suggested that you go through the challenges in Levels where each Level becomes increasingly more difficult.  If a Level takes you more than three hours to complete then consider repeating the Level before going onto the next Level.
+These are skills building exercises.  It is suggested that you go through all the challenges in Levels where each Level becomes increasingly more difficult.  If a Level takes you more than three hours to complete then consider repeating the Level another day before going onto the next Level.
 
 ### Level 1 - Beginner
 Try to do the challenges using as much reference as you need such as the templates, searching for information on the web, and referencing the solution as needed.
