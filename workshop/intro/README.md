@@ -1,6 +1,13 @@
 # Getting Started Lessons
 
-Some lessons on the basics
+The objective of these lessons are to gently introduce some core concepts and basic usage of Tensorflow.  There are several common misunderstandings that hold independent learners back, such as the difference between the Tensorflow code and the Tensorflow graph, which can take weeks or months to figure out and can be very fustrating to learn on ones own.
+
+The following concepts will be explored:
+
+- executing the *Code* vs the *Graph*
+- reversing the *Graph*
+- a definition of *Model*, *Learning Rate*, and *Loss*
+- a better way to structure code
 
 ## Lesson 1 - Just make something happen
 
