@@ -9,6 +9,11 @@ The following concepts will be explored:
 - a definition of *Model*, *Learning Rate*, and *Loss*
 - a better way to structure code
 
+
+## Lesson 0 - A review
+
+- Use python to calculate a x b = c
+
 ## Lesson 1 - Just make something happen
 
 - Make something super simple

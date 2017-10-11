@@ -1,6 +1,5 @@
 # -- imports --
 import tensorflow as tf
-import math
 from importlib import import_module
 import argparse
 

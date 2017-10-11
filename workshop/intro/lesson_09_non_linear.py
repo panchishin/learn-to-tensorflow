@@ -1,6 +1,5 @@
 # -- imports --
 import tensorflow as tf
-import math
 from importlib import import_module
 import argparse
 
@@ -26,7 +25,7 @@ for iteration in range(1, args.iterations + 1):
     sess.run(model.learn, feed_dict={model.x: data.x, model.y: data.y})
 
     # print feedback once in a while
-    if math.log10(iteration) == round(math.log10(iteration)):
+    if iteration == 1 or iteration == 10 or iteration == 100 or iteration % 1000 == 0:
         print "iteration =", iteration, ", RMS error is =",
         print sess.run(model.rms_error, feed_dict={model.x: data.x, model.y: data.y})
 
