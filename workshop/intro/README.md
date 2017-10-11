@@ -8,7 +8,7 @@ The following concepts will be explored:
 - reversing the *Graph*
 - a definition of *Model*, *Learning Rate*, and *Loss*
 - a better way to structure code
-
+- how tensorflow can be used to *Learn* variables in a *Graph*
 
 ## Lesson 0 - A review
 
@@ -59,5 +59,20 @@ The following concepts will be explored:
 
 ## Lesson 9 - Beyond Linear
 
-- Most problems are not linear
+- A lot of problems are not linear
 - First multi-layered neural net
+
+## Challenge
+
+- add data and model files to lesson 8 or 9
+
+
+# Review
+
+We explored the following concepts:
+
+- executing the *Code* vs the *Graph*
+- reversing the *Graph*
+- a definition of *Model*, *Learning Rate*, and *Loss*
+- a better way to structure code
+- how tensorflow can be used to *Learn* variables in a *Graph*
