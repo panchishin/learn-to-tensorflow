@@ -1,5 +1,6 @@
 import tensorflow as tf
 import time
+import layer
 
 mnist = None
 
@@ -12,11 +13,10 @@ def get_mnist_data():
     return mnist
 
 
-def handler_wrapper(handler):
+def model_wrapper(handler, size=28):
     # inputs
     tf.reset_default_graph()
 
-    size = 28
     x = tf.placeholder(tf.float32, [None, size * size])
     y_ = tf.placeholder(tf.float32, [None, 10])
     keep_prob = tf.placeholder(tf.float32)
@@ -43,7 +43,7 @@ def handler_wrapper(handler):
 
 def train_model_and_report(model, data=None, learning_rate_value=1e-4, epochs=200, keep_prob_value=0.5):
     print "MODEL :", model.__class__.__name__
-    x, y_, keep_prob, loss, train, percent_correct, training, learning_rate = handler_wrapper(model)
+    x, y_, keep_prob, loss, train, percent_correct, training, learning_rate = model_wrapper(model)
     if data == None:
         data = get_mnist_data()
 
@@ -105,14 +105,10 @@ def train_model_and_report(model, data=None, learning_rate_value=1e-4, epochs=20
 class simpleModel:
 
     def convolve(self, image, training,  keep_prob):
-        result = batch_normalization(image, training)
-        result = conv_relu(result, 1, 18, width=5, padding="VALID")
-        result = max_pool(result)  # 12
-        result = conv_relu(result, 18, 24, width=5, padding="VALID")
-        result = max_pool(result)  # 4
+        result = layer.conv_relu(image, 1, 24, width=28, padding="VALID")
         result = tf.nn.dropout(result, keep_prob)
-        return conv(result, 24, 10, width=4, padding="VALID")
+        return layer.conv(result, 24, 10, width=1, padding="VALID")
 
 
 if __name__ == '__main__':
-    train_model_and_report(simpleModel(), epochs=200, learning_rate_value=1e-3)
+    train_model_and_report(simpleModel(), epochs=20, learning_rate_value=1e-2)
