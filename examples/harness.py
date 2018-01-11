@@ -1,6 +1,7 @@
 import tensorflow as tf
 import time
 import layer
+import math
 
 mnist = None
 
@@ -32,13 +33,17 @@ def model_wrapper(handler, size=28):
     # addition of tf.GraphKeys.UPDATE_OPS dependency for batch normalization handling
     update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
     with tf.control_dependencies(update_ops):
-        train = tf.train.AdamOptimizer(learning_rate).minimize(loss)
+        train = tf.train.RMSPropOptimizer(learning_rate).minimize(loss)
 
     # Test trained model
     correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
     percent_correct = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
     return x, y_, keep_prob, loss, train, percent_correct, training, learning_rate
+
+
+def scale(index, max_index):
+    return 0.5 * (1.0 + math.cos(math.pi * index / max_index))
 
 
 def train_model_and_report(model, data=None, learning_rate_value=1e-4, epochs=200, keep_prob_value=0.5):
@@ -49,7 +54,6 @@ def train_model_and_report(model, data=None, learning_rate_value=1e-4, epochs=20
 
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
-        sess.run(tf.local_variables_initializer())
 
         items_per_batch = 200
         start_time = time.time()
@@ -57,23 +61,20 @@ def train_model_and_report(model, data=None, learning_rate_value=1e-4, epochs=20
         lambda_error = 100.0
         lambda_val = 0.3
 
-        for epoch in range(1, epochs + 1):
-            if (epoch + 1) % (epochs / 4) == 0:
-                learning_rate_value *= .5
-                # print "Decreasing learning_rate to", learning_rate_value
-
+        for epoch in range(epochs):
+            batches = int(data.test.labels.shape[0] / items_per_batch)
             training_loss = 0.0
-            for _ in range(data.test.labels.shape[0] / items_per_batch):
+            for batch in range(batches):
                 batch_xs, batch_ys = data.train.next_batch(items_per_batch)
                 result_loss, _ = sess.run([loss, train], feed_dict={
                     x: batch_xs, y_: batch_ys,
-                    keep_prob: keep_prob_value, training: True, learning_rate: learning_rate_value})
+                    keep_prob: keep_prob_value, training: True, learning_rate: learning_rate_value * scale(epoch * batches + batch, epochs * batches)})
                 training_loss += result_loss
 
             training_loss *= 1.0 * items_per_batch / data.test.labels.shape[0]
 
-            if epoch % 5 == 0:
-                print "\tEpoch %5d" % epoch, ", Training Loss %0.6f" % training_loss,
+            if (epoch + 1) % 5 == 0:
+                print "\tEpoch %5d" % epoch, ", Scaling %0.2f" % scale(epoch * batches, epochs * batches), ", Training Loss %0.4f" % training_loss,
                 correct = 0.0
                 test_loss = 0.0
                 for test_batch in range(100):
@@ -92,9 +93,9 @@ def train_model_and_report(model, data=None, learning_rate_value=1e-4, epochs=20
                 else:
                     lambda_error = lambda_error * (1.0 - lambda_val) + (100.0 - correct) * lambda_val
                 print ", Test Loss %0.4f" % test_loss,
-                print ", Train/Test %5.3f" % (training_loss / test_loss), ", Percent Error = %4.2f" % (100.0 - correct),
+                print ", Train/Test %4.2f" % (training_loss / test_loss), ", Percent Error = %4.2f" % (100.0 - correct),
                 print ", Lambda Error %4.2f" % lambda_error,
-                print ", ", int(time.time() - start_time), "seconds"
+                print ", ", int(time.time() - start_time), "sec"
                 if training_loss / test_loss < 0.01:
                     print "End condition met.  Rule 'training_loss / test_loss < 0.01'.  Possible overfitting."
                     return lambda_error
