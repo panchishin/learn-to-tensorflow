@@ -5,4 +5,5 @@
 04-xor-2d.py
 05-feed.py
 06-save.py
-07-rnn.py
+07-layers.py
+08-rnn.py

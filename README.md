@@ -86,16 +86,20 @@ Replicate 04-xor-2d, but instead of using constants for input and output, use fe
 Improve 05-feed.py to save the session information at the end of training and to use the saved session information if it exists instead of training.
 
 
-### 07-rnn.py (optional)
+### 07-layers.py
+Tensorflow has created helper functions called *tf.layers* that package up common combinations of tensors.  Use *tf.layers* to do the induction of xor.
+
+
+### 08-rnn.py (optional)
 Implement a recurrant neural net to accurately predict the next element in a series created by makeXY() in helper_make_xy.py
 
 This creates a series X like [2,3,4,5] and Y = [6]. The series can be a forward progression, a reverse progression, or a constant.  The series may also contain 3, 4, or 5 elements.
 
 An architecture that has been shown to work is:
-- RNN Cell state size of 20
+- RNN Cell state size of 5
 - 2 layers of RNN Cells
-- a fully connected 20x10 output layer
-- 50,000 iterations max
+- a fully connected 5x10 output layer
+- 20 * 500 iterations max
 - basic cross entropy
 - AdamOptimization(0.01)
 - One training example at a time (no batch processing)

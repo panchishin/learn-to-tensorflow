@@ -1,5 +1,9 @@
 # -- imports --
 import tensorflow as tf
+import numpy as np
+
+# np.set_printoptions(precision=1) reduces np precision output to 1 digit
+np.set_printoptions(precision=2, suppress=True)
 
 # -- constant data --
 x = [[0., 0.], [1., 1.], [1., 0.], [0., 1.]]
