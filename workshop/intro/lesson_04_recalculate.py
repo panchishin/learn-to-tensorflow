@@ -29,9 +29,9 @@ sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
 # let's do the multiplication
-print "The result of ", sess.run(a), "x", sess.run(b), "is", sess.run(c), ", but we want it to =", args.target
+print("The result of ", sess.run(a), "x", sess.run(b), "is", sess.run(c), ", but we want it to =", args.target)
 
 for iteration in range(1, args.iterations + 1):
     sess.run(learn)
     if iteration < 10 or (iteration % 10 == 0 and iteration < 100) or (iteration % 100 == 0 and iteration < 1000) or iteration % 1000 == 0:
-        print "On iteration", iteration, "the result of", sess.run(a), "x", sess.run(b), "is", sess.run(c)
+        print("On iteration", iteration, "the result of", sess.run(a), "x", sess.run(b), "is", sess.run(c))

@@ -13,7 +13,7 @@ c = tf.multiply(a, b)
 sess = tf.Session()
 
 # let's do the multiplication
-print "The result of 5x7 is", sess.run(c, feed_dict={a: 5, b: 7})
+print("The result of 5x7 is", sess.run(c, feed_dict={a: 5, b: 7}))
 
 # let's do the multiplication
-print "The result of 2x3 is", sess.run(c, feed_dict={a: 2, b: 3})
+print("The result of 2x3 is", sess.run(c, feed_dict={a: 2, b: 3}))

@@ -72,7 +72,7 @@ with tf.Session() as sess:
             # increment correct if result is the same as outy
             correct += 1.0 if result == outy else 0.0
 
-        print "Report =", (report + 1), " , correct =", (correct / steps_per_report), " , avgloss =", (avgloss / steps_per_report)
+        print("Report =", (report + 1), " , correct =", (correct / steps_per_report), " , avgloss =", (avgloss / steps_per_report))
         if correct == steps_per_report:
-            print "Finished early."
+            print("Finished early.")
             break

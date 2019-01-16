@@ -25,19 +25,20 @@ for iteration in range(1, args.iterations + 1):
     # learn
     sess.run(model.learn, feed_dict={model.x: data.x, model.y: data.y})
 
-    # print feedback once in a while
+    # print(feedback once in a while)
     if iteration == 1 or iteration == 10 or iteration == 100 or iteration % 1000 == 0:
-        print "iteration =", iteration, ", RMS error is =",
-        print sess.run(model.rms_error, feed_dict={model.x: data.x, model.y: data.y})
+        print("iteration =", iteration, 
+            ", RMS error is =", 
+            sess.run(model.rms_error, feed_dict={model.x: data.x, model.y: data.y}))
 
 
-print "\ndone training\n"
-print "The equation is f(x) =",
+print("\ndone training\n")
+print("The equation is f(x) =",)
 model.printEquation(sess)
 
 
 if args.plot:
-    print "\nGenerating estimates\n"
+    print("\nGenerating estimates\n")
     estimate = sess.run(model.fx, feed_dict={model.x: data.x})
     import matplotlib.pyplot as plt
     plt.plot(data.x, data.y)

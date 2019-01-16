@@ -13,9 +13,9 @@ c = tf.multiply(a, b)
 sess = tf.Session()
 
 # let's check out a, b, and c
-print "a =", a
-print "b =", b
-print "c =", c
+print("a =", a)
+print("b =", b)
+print("c =", c)
 
 # let's do the multiplication
-print "The result of 5x7 is", sess.run(c)
+print("The result of 5x7 is", sess.run(c))

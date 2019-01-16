@@ -34,7 +34,7 @@ def printTotalLoss():
     total_loss = 0
     for index in range(len(data_x)):
         total_loss += sess.run(loss, feed_dict={x: data_x[index], y: data_y[index]})
-    print "The total loss is", total_loss
+    print("The total loss is", total_loss)
 
 
 printTotalLoss()
@@ -45,11 +45,11 @@ def getBetter():
         sess.run(learn, feed_dict={x: data_x[index], y: data_y[index]})
 
 
-print "Calling get better"
+print("Calling get better")
 for iteration in range(1, 1001):
     getBetter()
     if iteration == 1 or iteration == 10 or iteration == 100 or iteration == 1000:
-        print "iteration", iteration,
+        print("iteration", iteration,)
         printTotalLoss()
 
-print "The equation is f(x) =", sess.run(a), "* x +", sess.run(b)
+print("The equation is f(x) =", sess.run(a), "* x +", sess.run(b))

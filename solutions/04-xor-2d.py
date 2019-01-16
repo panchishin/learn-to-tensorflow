@@ -41,17 +41,17 @@ train = tf.train.GradientDescentOptimizer(1.0).minimize(loss)
 # print out the loss and any other interesting info
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
-    print "\nloss"
+    print("\nloss")
     for step in range(500):
         sess.run(train)
         if (step + 1) % 100 == 0:
-            print sess.run(loss)
+            print(sess.run(loss))
 
     results = sess.run([m1, b1, m2, b2, y_out, loss])
     labels = "m1,b1,m2,b2,y_out,loss".split(",")
     for label, result in zip(*(labels, results)):
-        print ""
-        print label
-        print result
+        print("")
+        print(label)
+        print(result)
 
-print ""
+print("")

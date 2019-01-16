@@ -47,27 +47,27 @@ with tf.Session() as sess:
 
     if not os.path.exists(file_name + ".index"):
         sess.run(tf.global_variables_initializer())
-        print "No training file found.  Training..."
-        print "\nloss"
+        print("No training file found.  Training...")
+        print("\nloss")
         for step in range(500):
             sess.run(train, feed_dict={x0: x, y0: y_})
             if (step + 1) % 100 == 0:
-                print sess.run(loss, feed_dict={x0: x, y0: y_})
-        print "Training complete.  Saving..."
+                print(sess.run(loss, feed_dict={x0: x, y0: y_}))
+        print("Training complete.  Saving...")
         saver = tf.train.Saver()
         saver.save(sess, file_name)
-        print "Model saved to file", file_name
-        print "Run program again to use model."
+        print("Model saved to file", file_name)
+        print("Run program again to use model.")
 
     else:
-        print "Training file", file_name, "found."
+        print("Training file", file_name, "found.")
         saver = tf.train.Saver()
         saver.restore(sess, file_name)
         results = sess.run([m1, b1, m2, b2, y_out, loss], feed_dict={x0: x, y0: y_})
         labels = "m1,b1,m2,b2,y_out,loss".split(",")
         for label, result in zip(*(labels, results)):
-            print ""
-            print label
-            print result
+            print("")
+            print(label)
+            print(result)
 
-print ""
+print("")

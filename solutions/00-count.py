@@ -16,11 +16,11 @@ with tf.Session() as sess:
     # initialize session variables
     sess.run(tf.global_variables_initializer())
 
-    print "The starting state is", sess.run(state)
+    print("The starting state is", sess.run(state))
 
-    print "Run the update 10 times..."
+    print("Run the update 10 times...")
     for count in range(10):
         # execute the update
         sess.run(update)
 
-    print "The end state is", sess.run(state)
+    print("The end state is", sess.run(state))

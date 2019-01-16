@@ -27,8 +27,8 @@ learn = tf.train.AdamOptimizer(.01).minimize(rms_error)
 
 
 def printEquation(sess):
-    print "f(x) = tanh( x * m1 ) * m2"
-    print "m1 ="
-    print sess.run(m1)
-    print "m2 ="
-    print sess.run(m2)
+    print("f(x) = tanh( x * m1 ) * m2")
+    print("m1 =")
+    print(sess.run(m1))
+    print("m2 =")
+    print(sess.run(m2))

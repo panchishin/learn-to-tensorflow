@@ -1,5 +1,9 @@
 # -- imports --
 import tensorflow as tf
+import numpy as np
+
+# np.set_printoptions(precision= # TODO
+np.set_printoptions(precision= # TODO
 
 # -- constant data --
 x = # TODO
@@ -40,17 +44,17 @@ train = # TODO
 # print out the loss and any other interesting info
 with tf.Session() as sess:
     # TODO session execution command here
-    print "\nloss , regularization"
+    print("\nloss , regularization")
     for step in range(500):
         # TODO session execution command here
         if (step + 1) % 100 = # TODO
-            print # TODO session execution command here
+            print(# TODO session execution command here
 
     results = # TODO
     labels = # TODO
     for label, result in zip(*(labels, results)):
-        print ""
-        print label
-        print result
+        print("")
+        print(label)
+        print(result)
 
-print ""
+print("")

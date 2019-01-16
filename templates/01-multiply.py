@@ -19,7 +19,7 @@ c = # TODO
 # -- training --
 # Run tensorflow and print the result, the result should be 26
 with tf.Session() as sess:
-    print "Session started."
+    print("Session started.")
     result = # TODO
-    print "The result is", result
-    print "Which is", ("correct" if result = # TODO
+    print("The result is", result)
+    print("Which is", ("correct" if result = # TODO

@@ -34,20 +34,20 @@ with tf.Session() as sess:
     saver = tf.train.Saver()
     try :
         saver.restore(sess, file_name)
-        print "Restored from file"
+        print("Restored from file")
     except :
-        print "No save file found"
+        print("No save file found")
         sess.run(tf.global_variables_initializer())
-        print "\ntraining loss"
+        print("\ntraining loss")
         for step in range(500):
             sess.run(train, feed_dict=feed_dict)
             if (step + 1) % 100 == 0:
-                print sess.run(loss, feed_dict=feed_dict)
+                print(sess.run(loss, feed_dict=feed_dict))
         saver.save(sess, file_name)
 
     results = sess.run([loss,labels,predict], feed_dict=feed_dict)
     labels = "loss,labels,predict".split(",")
     for label, result in zip(*(labels, results)):
-        print ""
-        print label
-        print result
+        print("")
+        print(label)
+        print(result)

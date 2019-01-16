@@ -16,7 +16,7 @@ sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
 # let's do the multiplication
-print "The result of ", sess.run(a), "x", sess.run(b), "is", sess.run(c)
+print("The result of ", sess.run(a), "x", sess.run(b), "is", sess.run(c))
 
 sess.run(tf.assign(a, 10))
-print "The result of ", sess.run(a), "x", sess.run(b), "is", sess.run(c)
+print("The result of ", sess.run(a), "x", sess.run(b), "is", sess.run(c))

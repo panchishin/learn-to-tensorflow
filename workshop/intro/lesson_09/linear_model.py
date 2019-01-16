@@ -21,6 +21,6 @@ learn = tf.train.AdamOptimizer(0.01).minimize(rms_error)
 
 
 def printEquation(sess):
-    print "f(x) = x * m + b"
-    print "m =", sess.run(m)
-    print "b =", sess.run(b)
+    print("f(x) = x * m + b")
+    print("m =", sess.run(m))
+    print("b =", sess.run(b))

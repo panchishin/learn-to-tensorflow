@@ -22,4 +22,4 @@ learn = tf.train.AdamOptimizer(0.01).minimize(rms_error)
 
 
 def printEquation(sess):
-    print "f(x) = -1 * abs( x +", sess.run(a), ") +", sess.run(b), " * x +", sess.run(c)
+    print("f(x) = -1 * abs( x +", sess.run(a), ") +", sess.run(b), " * x +", sess.run(c))

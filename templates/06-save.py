@@ -1,6 +1,10 @@
 # -- imports --
 import tensorflow as tf
 import os
+import numpy as np
+
+# np.set_printoptions(precision= # TODO
+np.set_printoptions(precision= # TODO
 
 # file name
 file_name = # TODO
@@ -43,27 +47,27 @@ with tf.Session() as sess:
 
     if not os.path.exists(file_name + ".index"):
         # TODO session execution command here
-        print "No training file found.  Training..."
-        print "\nloss"
+        print("No training file found.  Training...")
+        print("\nloss")
         for step in range(500):
             # TODO session execution command here
             if (step + 1) % 100 = # TODO
-                print # TODO session execution command here
-        print "Training complete.  Saving..."
+                print(# TODO session execution command here
+        print("Training complete.  Saving...")
         saver = # TODO
         saver.save(sess, file_name)
-        print "Model saved to file", file_name
-        print "Run program again to use model."
+        print("Model saved to file", file_name)
+        print("Run program again to use model.")
 
     else:
-        print "Training file", file_name, "found."
+        print("Training file", file_name, "found.")
         saver = # TODO
         saver.restore(sess, file_name)
         results = # TODO
         labels = # TODO
         for label, result in zip(*(labels, results)):
-            print ""
-            print label
-            print result
+            print("")
+            print(label)
+            print(result)
 
-print ""
+print("")

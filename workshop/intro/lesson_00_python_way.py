@@ -8,6 +8,6 @@ c = a * b
 
 
 # let's check out a, b, and c
-print "a =", a
-print "b =", b
-print "c =", c
+print("a =", a)
+print("b =", b)
+print("c =", c)
