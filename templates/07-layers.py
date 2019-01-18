@@ -3,7 +3,7 @@ import numpy as np
 import os
 import sys
 
-# np.set_printoptions(precision= # TODO
+# np.set_printoptions(precision=1) reduces np precision output to 1 digit
 np.set_printoptions(precision= # TODO
 
 # placeholders

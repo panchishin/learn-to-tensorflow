@@ -32,7 +32,7 @@ y_out = tf.sigmoid(tf.matmul(h1, m2) + b2)
 # loss : sum of the squares of y0 - y_out
 loss = tf.reduce_sum(tf.square(y0 - y_out))
 
-# training step : gradient decent (1.0) to minimize loss
+# training step : gradient descent (1.0) to minimize loss
 train = tf.train.GradientDescentOptimizer(1.0).minimize(loss)
 
 

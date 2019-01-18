@@ -35,7 +35,7 @@ loss = tf.reduce_sum(tf.square(y0 - y_out))
 # regularize the average square of m1 and m2
 regularization = (tf.reduce_mean(tf.square(m1)) + tf.reduce_mean(tf.square(m2)))
 
-# training step : gradient decent (1.0) to minimize loss + regularization * 0.01
+# training step : gradient descent (1.0) to minimize loss + regularization * 0.01
 train = tf.train.GradientDescentOptimizer(1.0).minimize(loss + regularization * 0.01)
 
 

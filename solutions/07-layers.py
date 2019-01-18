@@ -29,7 +29,7 @@ feed_dict = {
 # -- training --
 # run 500 times using all the data and labels
 # print out the loss and any other interesting info
-file_name = "./"+sys.argv[0]+".save"
+file_name = "./temp7.save"
 with tf.Session() as sess:
     saver = tf.train.Saver()
     try :
