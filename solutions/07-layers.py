@@ -13,10 +13,11 @@ labels = tf.placeholder( shape=[None,2], dtype=tf.float32)
 # data -> hidden layer with 3 units and tanh activation
 # hidden -> prediction layer with softmax activation
 hidden = tf.layers.dense( inputs=data, units=3, activation=tf.nn.tanh, name='hidden')
-predict = tf.layers.dense( inputs=hidden, units=2, activation=tf.nn.softmax, name="predict" )
+logits = tf.layers.dense( inputs=hidden, units=2, activation=None, name="predict" )
+predict = tf.nn.softmax(logits)
 
 # loss using the mean of the squares of the error
-loss = tf.reduce_mean( tf.square( labels - predict ) )
+loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=labels,logits=logits))
 
 # training using gradient descent with a learning rate of 1
 train = tf.train.GradientDescentOptimizer(1.0).minimize(loss)
