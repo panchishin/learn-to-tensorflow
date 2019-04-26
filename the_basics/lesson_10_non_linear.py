@@ -11,7 +11,7 @@ parser.add_argument('--iterations', nargs='?', type=int, default=1000, help="The
 args = parser.parse_args()
 
 # -- get the model and data --
-data_directory = "lesson_09"
+data_directory = "lesson_10"
 model = import_module(data_directory + "." + args.model)
 data = import_module(data_directory + "." + args.data)
 
@@ -19,6 +19,9 @@ data = import_module(data_directory + "." + args.data)
 sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
+print()
+print(f"Using model {args.model} on the dataset {args.data}")
+print()
 for iteration in range(1, args.iterations + 1):
 
     # learn
@@ -26,8 +29,7 @@ for iteration in range(1, args.iterations + 1):
 
     # print(feedback once in a while)
     if iteration == 1 or iteration == 10 or iteration == 100 or iteration % 1000 == 0:
-        print("iteration =", iteration, ", RMS error is =",)
-        print(sess.run(model.rms_error, feed_dict={model.x: data.x, model.y: data.y}))
+        print(f"iteration {iteration:5}, RMS error = {sess.run(model.rms_error, feed_dict={model.x: data.x, model.y: data.y}):.2f}")
 
 
 print("\ndone training\n")
@@ -40,3 +42,5 @@ print("The real vs estimate is")
 print("[x1 , x2 ] y   fx")
 for x, y, fx in zip(data.x, data.y, estimate.tolist()):
     print(x, y, round(fx, 1))
+
+print()

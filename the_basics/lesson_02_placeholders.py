@@ -1,3 +1,11 @@
+
+# Our code will be really limited in use if all we can use is constants
+# in tensorflow
+
+# Here we introduce how we can pass different values using placeholders
+# and passing the values in using the feed_dict argument in sess.run
+
+
 # -- imports --
 import tensorflow as tf
 

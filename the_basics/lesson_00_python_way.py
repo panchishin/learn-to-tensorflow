@@ -1,4 +1,7 @@
 
+# we will use just plain old python for variables
+# and get it to do something very straight forward
+
 a = 5.0
 b = 7.0
 

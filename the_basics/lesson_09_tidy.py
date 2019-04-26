@@ -12,9 +12,13 @@ parser.add_argument('--iterations', nargs='?', type=int, default=10000, help="Th
 args = parser.parse_args()
 
 # -- get the model and data --
-data_directory = "lesson_08"
+data_directory = "lesson_09"
 model = import_module(data_directory + "." + args.model)
 data = import_module(data_directory + "." + args.data)
+
+print()
+print(f"Using model {args.model} on the dataset {args.data}")
+print()
 
 # start a session
 sess = tf.Session()
@@ -27,18 +31,16 @@ for iteration in range(1, args.iterations + 1):
 
     # print(feedback once in a while)
     if iteration == 1 or iteration == 10 or iteration == 100 or iteration % 1000 == 0:
-        print("iteration =", iteration, 
-            ", RMS error is =", 
-            sess.run(model.rms_error, feed_dict={model.x: data.x, model.y: data.y}))
+        print(f"iteration {iteration:5}, RMS error = {sess.run(model.rms_error, feed_dict={model.x: data.x, model.y: data.y}):.2f}")
 
 
 print("\ndone training\n")
-print("The equation is f(x) =",)
+print("The equation is f(x) =")
 model.printEquation(sess)
 
 
 if args.plot:
-    print("\nGenerating estimates\n")
+    print("\nGenerating estimates for plot\n")
     estimate = sess.run(model.fx, feed_dict={model.x: data.x})
     import matplotlib.pyplot as plt
     plt.plot(data.x, data.y)
