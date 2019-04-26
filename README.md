@@ -7,6 +7,8 @@ understanding of tensorflow basics.
 Each challenge has a corresponding solution in the solutions folder.
 If you need a hint or some starter code to give you structure there are templates in the template folder which have only the outline of the solution files.
 
+If you are totally new to Tensorflow and don't know the difference between the graph and code, check out the subdirectory [the_basics](the_basics)
+
 
 ## How to use this resource
 These are skills building exercises.  It is suggested that you go through all the challenges in Levels where each Level becomes increasingly more difficult.  If a Level takes you more than three hours to complete then consider repeating the Level another day before going onto the next Level.
