@@ -31,14 +31,21 @@ data_y = [0.1, 0.2, 0.4, 0.4, 0.6, 0.5, 0.7, 0.7, 0.9]
 
 # let's calculate the total loss
 
+print(f"""
+We are using tensorflow to find the best equation that maps
+x = {data_x}
+to
+y = {data_y}
+""")
 
 def printTotalLoss():
     total_loss = 0
     for index in range(len(data_x)):
         total_loss += sess.run(loss, feed_dict={x: data_x[index], y: data_y[index]})
-    print("The total loss is", total_loss)
+    print("the total loss is", total_loss)
 
 
+print("\nBefore training",end=" ")
 printTotalLoss()
 
 
@@ -47,11 +54,16 @@ def getBetter():
         sess.run(learn, feed_dict={x: data_x[index], y: data_y[index]})
 
 
-print("Calling get better")
+print("\nCalling get better")
 for iteration in range(1, 1001):
     getBetter()
     if iteration == 1 or iteration == 10 or iteration == 100 or iteration == 1000:
-        print("iteration", iteration,)
+        print("iteration", iteration, end=" ")
         printTotalLoss()
 
-print("The equation is f(x) =", sess.run(a), "* x +", sess.run(b))
+print("\nWe calculated the equation is y =", sess.run(a), "* x +", sess.run(b))
+
+print("""
+We can look at the data for x and y and see that it is close!
+We were able to use Tensorflow to fit a line to some data.
+""")

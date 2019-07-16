@@ -25,7 +25,7 @@ c = tf.multiply(a, b)
 loss = tf.square(c - args.target)
 
 # We want tensorflow to learn from the loss (the error) and
-# this is how do that
+# this is how we do that
 optimizer = GradientDescentOptimizer(args.learning_rate)
 learn = optimizer.minimize(loss)
 
@@ -54,4 +54,14 @@ for iteration in range(1, args.iterations + 1):
     if iteration < 10 or (iteration % 10 == 0 and iteration < 100) or (iteration % 100 == 0 and iteration < 1000) or iteration % 1000 == 0:
         print(f'{iteration:9}  | {sess.run(a):.2f} * {sess.run(b):.2f} = {sess.run(c):.2f}')
 
-print()
+print("""
+And there we have it, we used Tensorflow to discover
+that a has to equal about 4.29 if b = 7 and c = 30.
+
+If you know algebra you may be wondering why we didn't just solve for a.
+
+This is a general technique that can be used to solve larger problems that do
+not have an algebraic solution, like recognizing a cat in a photo.
+
+Starting with something small that we can verify another way helps us understand it.
+""")
