@@ -1,9 +1,11 @@
 # -- imports --
 import tensorflow as tf
+from tensorflow.compat.v1 import placeholder
+from tensorflow.compat.v1.train import AdamOptimizer
 
 # -- placeholders --
-x = tf.placeholder(dtype=tf.float32, shape=[None, None])
-y = tf.placeholder(dtype=tf.float32, shape=[None])
+x = placeholder(dtype=tf.float32, shape=[None, None])
+y = placeholder(dtype=tf.float32, shape=[None])
 
 
 # -- variables and induction --
@@ -23,7 +25,7 @@ fx = tf.reshape(L2, [-1])
 # -- loss --
 rms_error = tf.sqrt(tf.reduce_sum(tf.square(y - fx)))
 
-learn = tf.train.AdamOptimizer(.01).minimize(rms_error)
+learn = AdamOptimizer(.01).minimize(rms_error)
 
 
 def printEquation(sess):

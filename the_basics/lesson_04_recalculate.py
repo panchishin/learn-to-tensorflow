@@ -1,5 +1,7 @@
 # -- imports --
 import tensorflow as tf
+from tensorflow.compat.v1 import Session, global_variables_initializer
+from tensorflow.compat.v1.train import GradientDescentOptimizer
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--learning_rate', nargs='?', type=float, default=0.001, help="The learning rate.  Default to 0.001.")
@@ -24,14 +26,14 @@ loss = tf.square(c - args.target)
 
 # We want tensorflow to learn from the loss (the error) and
 # this is how do that
-optimizer = tf.train.GradientDescentOptimizer(args.learning_rate)
+optimizer = GradientDescentOptimizer(args.learning_rate)
 learn = optimizer.minimize(loss)
 
 # start a session
-sess = tf.Session()
+sess = Session()
 
 # initialize the variables
-sess.run(tf.global_variables_initializer())
+sess.run(global_variables_initializer())
 
 # let's do the multiplication
 print("The result of ", sess.run(a), "x", sess.run(b), "is", sess.run(c), ", but we want it to =", args.target)

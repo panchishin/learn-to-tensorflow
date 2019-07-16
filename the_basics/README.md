@@ -10,7 +10,7 @@ The following concepts will be explored:
 - a better way to structure code
 - how tensorflow can be used to *Learn* variables in a *Graph*
 
-For each lesson open the corresponding file, read the code and the commends, then run and modify the code to get a feel for it.
+For each lesson open the corresponding file, read the code and the comments, then run and modify the code to get a feel for it.
 
 ## Lesson 0 - A review
 
@@ -51,7 +51,7 @@ For each lesson open the corresponding file, read the code and the commends, the
 
 ## Lesson 7 - Same thing but a lot better
 
-- Use the matrix
+- use the matrix
 
 ## Lesson 8 - Same thing with a curve
 

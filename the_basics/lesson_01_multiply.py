@@ -10,6 +10,7 @@
 
 # -- imports --
 import tensorflow as tf
+from tensorflow.compat.v1 import Session
 
 # -- constants --
 a = tf.constant(5.0)
@@ -20,7 +21,7 @@ b = tf.constant(7.0)
 c = tf.multiply(a, b)
 
 # start a session
-sess = tf.Session()
+sess = Session()
 
 # let's check out a, b, and c
 print("a =", a)

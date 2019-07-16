@@ -1,5 +1,7 @@
 # -- imports --
 import tensorflow as tf
+from tensorflow.compat.v1 import Session, global_variables_initializer
+from tensorflow.compat.v1.train import GradientDescentOptimizer
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--learning_rate', nargs='?', type=float, default=0.001, help="The learning rate.  Default to 0.001.")
@@ -24,7 +26,7 @@ loss = tf.square(c - args.target)
 
 # We want tensorflow to learn from the loss (the error) and
 # this is how do that
-optimizer = tf.train.GradientDescentOptimizer(args.learning_rate)
+optimizer = GradientDescentOptimizer(args.learning_rate)
 learn = optimizer.minimize(loss)
 
 # we want to see what the optimizer is doing in this example,
@@ -34,10 +36,10 @@ gradient = optimizer.compute_gradients(loss, var_list=[a])
 
 
 # start a session
-sess = tf.Session()
+sess = Session()
 
 # initialize the variables
-sess.run(tf.global_variables_initializer())
+sess.run(global_variables_initializer())
 
 # let's do the multiplication
 print("The result of ", sess.run(a), "x", sess.run(b), "is", sess.run(c), ", but we want it to =", args.target)
@@ -65,7 +67,7 @@ print("As you can see, the value of 'a' changes by the gradient * learning_rate 
 print()
 print("The code : ")
 print()
-print(">   optimizer = tf.train.GradientDescentOptimizer(args.learning_rate)")
+print(">   optimizer = GradientDescentOptimizer(args.learning_rate)")
 print(">   learn = optimizer.minimize(loss)")
 print()
 print("Tells tensorflow to use the error function (loss) to derive gradient and")
@@ -74,5 +76,5 @@ print("We could use the value of gradient to do this ourselves, but we")
 print("well see that for more complicated graphs the above 2 lines does is more concise,")
 print("and infact we can reduce it to one line")
 print()
-print(">   learn = tf.train.GradientDescentOptimizer(args.learning_rate).minimize(loss)")
+print(">   learn = GradientDescentOptimizer(args.learning_rate).minimize(loss)")
 print()

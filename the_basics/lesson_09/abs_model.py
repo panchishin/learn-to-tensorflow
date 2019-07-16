@@ -1,9 +1,11 @@
 # -- imports --
 import tensorflow as tf
+from tensorflow.compat.v1 import placeholder
+from tensorflow.compat.v1.train import AdamOptimizer
 
 # -- placeholders --
-x = tf.placeholder(dtype=tf.float32, shape=[None])
-y = tf.placeholder(dtype=tf.float32, shape=[None])
+x = placeholder(dtype=tf.float32, shape=[None])
+y = placeholder(dtype=tf.float32, shape=[None])
 
 # -- variables --
 # f(x) = ax + b
@@ -18,7 +20,7 @@ fx = -1 * tf.abs(x + a) + b * x + c
 # -- loss --
 # let's use RMS as our error function
 rms_error = tf.sqrt(tf.reduce_mean(tf.square(fx - y)))
-learn = tf.train.AdamOptimizer(0.01).minimize(rms_error)
+learn = AdamOptimizer(0.01).minimize(rms_error)
 
 
 def printEquation(sess):

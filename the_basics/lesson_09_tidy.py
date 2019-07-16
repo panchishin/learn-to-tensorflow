@@ -1,5 +1,6 @@
 # -- imports --
 import tensorflow as tf
+from tensorflow.compat.v1 import Session, global_variables_initializer
 from importlib import import_module
 import argparse
 
@@ -21,8 +22,8 @@ print(f"Using model {args.model} on the dataset {args.data}")
 print()
 
 # start a session
-sess = tf.Session()
-sess.run(tf.global_variables_initializer())
+sess = Session()
+sess.run(global_variables_initializer())
 
 for iteration in range(1, args.iterations + 1):
 

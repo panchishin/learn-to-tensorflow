@@ -13,7 +13,7 @@ addition = tf.add(state, one)
 update = tf.assign(state, addition)
 
 # create a session
-with tf.Session() as sess:
+with tf.compat.v1.Session() as sess:
     # initialize session variables
     sess.run(tf.global_variables_initializer())
 

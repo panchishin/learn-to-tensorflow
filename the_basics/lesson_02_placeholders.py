@@ -8,17 +8,18 @@
 
 # -- imports --
 import tensorflow as tf
+from tensorflow.compat.v1 import placeholder, Session
 
 # -- variables --
-a = tf.placeholder(dtype=tf.float32)
-b = tf.placeholder(dtype=tf.float32)
+a = placeholder(dtype=tf.float32)
+b = placeholder(dtype=tf.float32)
 
 # -- induction --
 # Multiply a by b
 c = tf.multiply(a, b)
 
 # start a session
-sess = tf.Session()
+sess = Session()
 
 # let's do the multiplication
 print("The result of 5x7 is", sess.run(c, feed_dict={a: 5, b: 7}))
