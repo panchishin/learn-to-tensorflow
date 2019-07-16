@@ -1,5 +1,6 @@
 # -- imports --
 import tensorflow as tf
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 import numpy as np
 
 # np.set_printoptions(precision=1) reduces np precision output to 1 digit

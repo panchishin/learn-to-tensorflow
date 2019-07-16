@@ -54,7 +54,9 @@ source ~/env/learn-to-tensorflow/bin/activate
 ```
 
 
-## The challenges
+## First challenges - the fundamentals
+
+These first challenges focus on the fundamentals by writing our graphs and models from scratch.
 
 ### 00-count.py
 Create a very basic tensorflow program that adds one to a variable and uses a loop to run the addition ten times.
@@ -107,22 +109,23 @@ Replicate 04-xor-2d, but instead of using constants for input and output, use fe
 Improve 05-feed.py to save the session information at the end of training and to use the saved session information if it exists instead of training.
 
 
-### 07-layers.py
-Tensorflow has created helper functions called *tf.layers* that package up common combinations of tensors.  Use *tf.layers* to do the induction of xor.
+## Layers
 
+In Tensorflow 1.14, Keras layers have been added to simplify much of the construction.
 
-### 08-rnn.py (optional)
-Implement a recurrant neural net to accurately predict the next element in a series created by makeXY() in helper_make_xy.py
+### 10-basic-layers.py
+Use tf.keras.Sequential and tf.keras.Dense to redo 02-xor-1d.py
 
-This creates a series X like [2,3,4,5] and Y = [6]. The series can be a forward progression, a reverse progression, or a constant.  The series may also contain 3, 4, or 5 elements.
+And break the problem into the following layers
+- 2x3 + bias hidden sigmoid layer (using tf.keras.Dense)
+- 3x1 + bias sigmoid output layer (using tf.keras.Dense)
+- calculate loss as the binary crossentropy
+- use gradient decent (set to 1.0) to minimize loss
 
-An architecture that has been shown to work is:
-- RNN Cell state size of 5
-- 2 layers of RNN Cells
-- a fully connected 5x10 output layer
-- 20 * 500 iterations max
-- basic cross entropy
-- AdamOptimization(0.01)
-- One training example at a time (no batch processing)
+Run the training for 1000 iterations
 
-*Note* This is marked as optional because it is fairly advanced.  I'd recommend that you master all the previous challenges to **level 3** before adding this challenge to your curriculum
+### 11-info.py
+Retrieve info form model and see that the internal representation is akin to 02-xor-1d.py
+
+### 12-layers-save.py
+Use tf.keras to save and restore the calculated model
