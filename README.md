@@ -11,4 +11,3 @@ difference between the graph and code, check out the subdirectory [the_basics](t
 
 For daily exercises that will build your coding skills 
 through repetition and elaboration check out [daily_exercise](daily_exercise)
-
