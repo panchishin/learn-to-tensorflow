@@ -24,9 +24,12 @@ b1 = tf.Variable(tf.random_uniform([3], minval=0.1, maxval=0.9, dtype=tf.float32
 h1 = tf.sigmoid(tf.matmul(x0, m1) + b1)
 
 # calculate the batch norm for h1
-mean1 = tf.reduce_mean(h1, 0)
-std1 = tf.sqrt(tf.reduce_mean(tf.square(h1 - mean1), 0) + 1e-6)
-batch_norm_h1 = (h1 - mean1) / std1
+# the equation of batch normalization is ( h - average(h) ) / standard_deviation(h)
+# we don't divide by the standard_deviation just in-case it is 0,
+# instead divide by standard_deviation + some really small number
+average1 = tf.reduce_mean(h1, 0)
+std1 = tf.sqrt(tf.reduce_mean(tf.square(h1 - average1), 0))
+batch_norm_h1 = (h1 - average1) / (std1 + 1e-6)
 
 # Layer 2 = the 3x2 softmax output
 m2 = tf.Variable(tf.random_uniform([3, 2], minval=0.1, maxval=0.9, dtype=tf.float32))

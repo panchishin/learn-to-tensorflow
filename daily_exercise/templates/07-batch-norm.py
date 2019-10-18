@@ -24,7 +24,10 @@ b1 = # TODO
 h1 = # TODO
 
 # calculate the batch norm for h1
-mean1 = # TODO
+# the equation of batch normalization is ( h - average(h) ) / standard_deviation(h)
+# we don't divide by the standard_deviation just in-case it is 0,
+# instead divide by standard_deviation + some really small number
+average1 = # TODO
 std1 = # TODO
 batch_norm_h1 = # TODO
 
