@@ -109,6 +109,13 @@ Replicate 04-xor-2d, but instead of using constants for input and output, use fe
 Improve 05-feed.py to save the session information at the end of training and to use the saved session information if it exists instead of training.
 
 
+### 07-batch-norm.py
+Improve 05-feed.py by adding batch normalization after the hidden layer.  Batch normalization
+adds stability and decreases training time.  Compare the output of 05-feed.py and 07-batch-norm.py
+
+The amount of accuracy gain, even for such a simple network, is great.
+
+
 ## Layers
 
 In Tensorflow 1.14, Keras layers have been added to simplify much of the construction.
@@ -124,8 +131,12 @@ And break the problem into the following layers
 
 Run the training for 1000 iterations
 
-### 11-info.py
+### 11-layers-batch-norm.py
+Same as 10-basic-layers.py but with batch normalization, but run
+with 500 iterations instead of 1000 and compare the results.
+
+### 12-info.py
 Retrieve info form model and see that the internal representation is akin to 02-xor-1d.py
 
-### 12-layers-save.py
+### 13-layers-save.py
 Use tf.keras to save and restore the calculated model

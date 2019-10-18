@@ -13,7 +13,7 @@ addition = # TODO
 update = # TODO
 
 # create a session
-with tf.Session() as sess:
+with tf.compat.v1.Session() as sess:
     # initialize session variables
     # TODO session execution command here
 

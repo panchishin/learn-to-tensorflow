@@ -2,14 +2,14 @@ import numpy as np
 import tensorflow as tf
 
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-np.set_printoptions(precision=1, suppress=True)
+np.set_printoptions(precision=3, suppress=True)
 
 # The data
 
 x = np.array([[0., 0.], [1., 1.], [1., 0.], [0., 1.]])
 y = np.array([[0.], [0.], [1.], [1.]])
 
-filename = "11-layers-save.model"
+filename = "13-layers-save.model"
 
 try:
     # Try and restore the graph

@@ -1,14 +1,11 @@
 # -- imports --
-import os
 import numpy as np
 import tensorflow as tf
+
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
 # np.set_printoptions(precision=1) reduces np precision output to 1 digit
 np.set_printoptions(precision= # TODO
-
-# file name
-file_name = # TODO
 
 # -- constant data --
 x = # TODO
@@ -26,11 +23,15 @@ m1 = # TODO
 b1 = # TODO
 h1 = # TODO
 
+# calculate the batch norm for h1
+mean1 = # TODO
+std1 = # TODO
+batch_norm_h1 = # TODO
+
 # Layer 2 = the 3x2 softmax output
 m2 = # TODO
 b2 = # TODO
 y_out = # TODO
-
 
 # -- loss --
 
@@ -40,35 +41,24 @@ loss = # TODO
 # training step : gradient descent (1.0) to minimize loss
 train = # TODO
 
-
 # -- training --
 # run 500 times using all the X and Y
 # print out the loss and any other interesting info
 with tf.Session() as sess:
+    # TODO session execution command here
 
-    if not os.path.exists(file_name + ".index"):
+    print("\nloss")
+    for step in range(500):
         # TODO session execution command here
-        print("No training file found.  Training...")
-        print("\nloss")
-        for step in range(500):
-            # TODO session execution command here
-            if (step + 1) % 100 = # TODO
-                print(# TODO session execution command here
-        print("Training complete.  Saving...")
-        saver = # TODO
-        saver.save(sess, file_name)
-        print("Model saved to file", file_name)
-        print("Run program again to use model.")
+        if (step + 1) % 100 = # TODO
+            print(# TODO session execution command here
 
-    else:
-        print("Training file", file_name, "found.")
-        saver = # TODO
-        saver.restore(sess, file_name)
-        results = # TODO
-        labels = # TODO
-        for label, result in zip(*(labels, results)):
-            print("")
-            print(label)
-            print(result)
+    results = # TODO
+    labels = # TODO
+    for label, result in zip(*(labels, results)):
+        print("")
+        print(label)
+        print(result)
 
 print("")
+

@@ -1,5 +1,5 @@
 text
-
+.idea
 **/*.pyc
 **/*.txt
 **/checkpoint
