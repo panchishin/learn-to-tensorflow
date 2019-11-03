@@ -13,16 +13,13 @@ For daily exercises that will build your coding skills
 through repetition and elaboration check out [daily_exercise](daily_exercise)
 
 
-## The code uses Python 3.6 
-( Python >3.6 is not supported by tensorflow at time of writing)
+## The code uses Python 3.7+
 
-Install Python 3.6 if you don't have it already.  On a mac use 
-```
-brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/f2a764ef944b1080be64bd88dca9a1d80130c558/Formula/python.rb
-```
+Install Python 3.7+ if you don't have it already.  On mac use `brew install python3.7` for 3.7
+
 Create a virtual env and install the dependencies
 ```
-virtualenv --python python3.6 ~/env/learn-to-tensorflow
+virtualenv --python python3.7 ~/env/learn-to-tensorflow
 source ~/env/learn-to-tensorflow/bin/activate
 pip install -r requirements.txt
 ```
