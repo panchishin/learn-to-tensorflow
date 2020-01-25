@@ -1,6 +1,6 @@
 # Learn To Tensorflow
 
-Updated for Tensorflow 1.14
+Updated for Tensorflow 1.15
 
 This repository contains mini programming challenges
 aimed to gradually stretch your working skills and 

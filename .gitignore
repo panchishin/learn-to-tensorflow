@@ -1,7 +1,6 @@
 text
 .idea
 **/*.pyc
-**/*.txt
 **/checkpoint
 **/*.save*
 **/cache
