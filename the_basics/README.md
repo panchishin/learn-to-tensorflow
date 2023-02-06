@@ -14,7 +14,7 @@ For each lesson open the corresponding file, read the code and the comments, the
 
 
 ### Using Jupyter
-If you like to use jupyter notebooks you can try this
+If you like to use jupyter notebooks you can try [this colab notebook](https://colab.research.google.com/drive/1tgofL5o8hidbgcZ2wSTKl7xTLjcgEdZi?usp=sharing) or locally using
 ```
 python -m ipykernel install --user --name learn-to-tensorflow --display-name "Learn to tensorflow"
 jupyter notebook
